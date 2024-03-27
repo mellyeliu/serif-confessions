@@ -1,17 +1,65 @@
 @font-face {
     font-family: 'EditorialNew';
-    src: local('CustomFont'), url('Fonts/PPEditorialNew-Regular-BF644b214ff145f.otf') format('otf');
+    src:  url('Fonts/PPEditorialNew-Regular-BF644b214ff145f.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'EditorialNew';
-    src: local('CustomFont'), url('Fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf') format('otf');
+    font-family: 'EditorialNewP';
+    src: url('Fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf') format('opentype');
     font-weight: light;
     font-style: normal;
   }
 
+  @media (max-width: 700px) {
+    .page-container {
+        overflow: hidden;
+        box-sizing: border-box !important;
+      }
+
+      .nested-div, .text {
+        font-size: 12px;
+        width: 100%;
+        float: none !important;
+        display: block;
+        box-sizing: border-box !important;
+        border-right: none !important;
+        padding: 0px 0px !important;
+        float: none;
+      }
+
+      h2 {
+        width: 100% !important;
+        display: block;
+        font-size: 48px !important;
+        padding: 0px !important;
+      }
+
+      h3 {
+        display: block;
+        font-size: 20px !important;
+      }
+
+      p {
+        display: block;
+        font-size: 16px !important;
+      }
+
+      .body-row {
+        flex-direction: column;
+        padding: 15px 30px;
+        /* padding: 10px; */
+        width: 100%; /* Ensure full width on small screens */
+        height: auto !important;
+        box-sizing: border-box;
+      }
+      div {
+        width: 100% !important;
+        float: none !important;
+      }
+
+  }
 
 .page-container {
     font-family: Arial, sans-serif;
@@ -22,7 +70,7 @@
   .nav-header {
     /* background-color: #f0f0f0; */
     padding: 20px;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px solid black;;
   }
 
@@ -34,7 +82,7 @@
     /* margin-bottom: 20px; */
     display: flex;
     justify-content: space-around;
-    height: 500px;
+    height: 600px;
     border-bottom: 1px solid black;;
   }
 
@@ -79,5 +127,20 @@
   h2 {
     font-size: 56px;
     font-family: 'EditorialNew';
-    font-weight: 300;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  h3 {
+    color: #000000;
+    font-size: 24px;
+    text-align: left;
+    font-weight: normal;
+  }
+
+
+  p {
+    color: #9a9a9a;
+    font-size: 20px;
+    text-align: left;
   }
