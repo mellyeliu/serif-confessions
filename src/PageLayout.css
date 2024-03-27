@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'EditorialNew';
+    src: local('CustomFont'), url('Fonts/PPEditorialNew-Regular-BF644b214ff145f.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'EditorialNew';
+    src: local('CustomFont'), url('Fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf') format('otf');
+    font-weight: light;
+    font-style: normal;
+  }
+
+
+.page-container {
+    font-family: Arial, sans-serif;
+    background-color: #F6F5EF;
+    box-sizing: border-box !important;
+  }
+
+  .nav-header {
+    /* background-color: #f0f0f0; */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid black;;
+  }
+
+  .body-container {
+    margin: 00px 0;
+  }
+
+  .body-row {
+    /* margin-bottom: 20px; */
+    display: flex;
+    justify-content: space-around;
+    height: 500px;
+    border-bottom: 1px solid black;;
+  }
+
+  .body-row.single {
+    text-align: center;
+  }
+
+  .nested-div {
+    flex: 1;
+    margin: 0 0px; /* Adds spacing between divs */
+    /* background-color: #e9e9e9; */
+    padding: 50px;
+    text-align: center;
+    border-right: 1px solid black;
+    box-sizing: border-box !important;
+  }
+
+  /* Targets the second row */
+.two .nested-div:first-child {
+    flex: 0 1 33.3% !important;
+  }
+
+  .two .nested-div:last-child {
+    flex: 0 1 66.6% !important;
+  }
+
+  /* Targets the fourth row */
+  .four .nested-div:first-child {
+    flex: 0 1 66.66%;
+  }
+
+  .four .nested-div:last-child {
+    flex: 0 1 33.33%;
+  }
+
+  /* .nested-div-custom {
+    margin: 0 0px;
+    text-align: center;
+    border-right: 1px solid black;
+  } */
+
+  h2 {
+    font-size: 56px;
+    font-family: 'EditorialNew';
+    font-weight: 300;
+  }
