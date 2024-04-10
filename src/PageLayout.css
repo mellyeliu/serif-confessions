@@ -1,146 +1,118 @@
 @font-face {
-    font-family: 'EditorialNew';
-    src:  url('Fonts/PPEditorialNew-Regular-BF644b214ff145f.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'EditorialNew';
+  src: url('Fonts/PPEditorialNew-Regular-BF644b214ff145f.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-  @font-face {
-    font-family: 'EditorialNewP';
-    src: url('Fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf') format('opentype');
-    font-weight: light;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'EditorialNewP';
+  src: url('Fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf') format('opentype');
+  font-weight: light;
+  font-style: normal;
+}
 
-  @media (max-width: 700px) {
-    .page-container {
-        overflow: hidden;
-        box-sizing: border-box !important;
-      }
+.App {
+  background-color: #ECE8E0;
+  height: 1000px;
+}
 
-      .nested-div, .text {
-        font-size: 12px;
-        width: 100%;
-        float: none !important;
-        display: block;
-        box-sizing: border-box !important;
-        border-right: none !important;
-        padding: 0px 0px !important;
-        float: none;
-      }
-
-      h2 {
-        width: 100% !important;
-        display: block;
-        font-size: 48px !important;
-        padding: 0px !important;
-      }
-
-      h3 {
-        display: block;
-        font-size: 20px !important;
-      }
-
-      p {
-        display: block;
-        font-size: 16px !important;
-      }
-
-      .body-row {
-        flex-direction: column;
-        padding: 15px 30px;
-        /* padding: 10px; */
-        width: 100%; /* Ensure full width on small screens */
-        height: auto !important;
-        box-sizing: border-box;
-      }
-      div {
-        width: 100% !important;
-        float: none !important;
-      }
-
-  }
-
-.page-container {
-    font-family: Arial, sans-serif;
-    background-color: #F6F5EF;
+@media (max-width: 700px) {
+  .page-container {
+    overflow: hidden;
     box-sizing: border-box !important;
   }
 
-  .nav-header {
-    /* background-color: #f0f0f0; */
-    padding: 20px;
-    text-align: left;
-    border-bottom: 1px solid black;;
-  }
-
-  .body-container {
-    margin: 00px 0;
-  }
-
-  .body-row {
-    /* margin-bottom: 20px; */
-    display: flex;
-    justify-content: space-around;
-    height: 600px;
-    border-bottom: 1px solid black;;
-  }
-
-  .body-row.single {
-    text-align: center;
-  }
-
-  .nested-div {
-    flex: 1;
-    margin: 0 0px; /* Adds spacing between divs */
-    /* background-color: #e9e9e9; */
-    padding: 50px;
-    text-align: center;
-    border-right: 1px solid black;
+  .nested-div,
+  .text {
+    font-size: 12px;
+    width: 100%;
+    float: none !important;
+    display: block;
     box-sizing: border-box !important;
+    border-right: none !important;
+    padding: 0px 0px !important;
+    float: none;
   }
-
-  /* Targets the second row */
-.two .nested-div:first-child {
-    flex: 0 1 33.3% !important;
-  }
-
-  .two .nested-div:last-child {
-    flex: 0 1 66.6% !important;
-  }
-
-  /* Targets the fourth row */
-  .four .nested-div:first-child {
-    flex: 0 1 66.66%;
-  }
-
-  .four .nested-div:last-child {
-    flex: 0 1 33.33%;
-  }
-
-  /* .nested-div-custom {
-    margin: 0 0px;
-    text-align: center;
-    border-right: 1px solid black;
-  } */
 
   h2 {
-    font-size: 56px;
+    width: 100% !important;
+    display: block;
+    font-size: 48px !important;
+    padding: 0px !important;
     font-family: 'EditorialNew';
-    font-weight: normal;
-    text-align: left;
+    font-weight: 300;
+    text-align: center;
   }
 
   h3 {
-    color: #000000;
-    font-size: 24px;
-    text-align: left;
-    font-weight: normal;
+    display: block;
+    font-size: 20px !important;
   }
-
 
   p {
-    color: #9a9a9a;
-    font-size: 20px;
-    text-align: left;
+    display: block;
+    font-size: 16px !important;
   }
+
+  .body-row {
+    flex-direction: column;
+    padding: 15px 30px;
+    /* padding: 10px; */
+    width: 100%;
+    /* Ensure full width on small screens */
+    height: auto !important;
+    box-sizing: border-box;
+  }
+
+  div {
+    width: 100% !important;
+    float: none !important;
+  }
+
+}
+
+.page-container {
+  font-family: Arial, sans-serif;
+  background-color: #F6F5EF;
+  box-sizing: border-box !important;
+}
+
+.nav-header {
+  /* background-color: #f0f0f0; */
+  padding: 20px;
+  text-align: left;
+}
+
+.body-container {
+  margin: 00px 0;
+}
+
+.body-row {
+  /* margin-bottom: 20px; */
+  display: flex;
+  justify-content: space-around;
+}
+
+
+
+h2 {
+  font-family: 'EditorialNew';
+  font-weight: 300;
+  text-align: center;
+  font-size: 26px;
+}
+
+h3 {
+  font-family: 'EditorialNew';
+  font-weight: 300;
+  text-align: center;
+  font-size: 22px;
+}
+
+
+p {
+  color: #9a9a9a;
+  font-size: 20px;
+  text-align: left;
+}
