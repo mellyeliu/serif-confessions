@@ -25,6 +25,10 @@
     box-sizing: border-box !important;
   }
 
+  .mobileFull {
+    width: 100% !important;
+  }
+
   .nested-div,
   .text {
     font-size: 12px;
@@ -40,10 +44,11 @@
   h2 {
     width: 100% !important;
     display: block;
-    font-size: 48px !important;
+    font-size: 32px !important;
     padding: 0px !important;
     font-family: 'EditorialNewP';
     font-weight: 300;
+    margin: 0 !important;
     text-align: center;
   }
 
@@ -60,7 +65,7 @@
 
   .body-row {
     flex-direction: column;
-    padding: 15px 30px;
+    padding: 5px 10px;
     /* padding: 10px; */
     width: 100%;
     /* Ensure full width on small screens */

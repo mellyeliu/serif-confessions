@@ -30,7 +30,7 @@ const StoryHome = () => {
         </div>
       </div>
       <div className="body-row single one">
-        <div style={{ marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
+        <div className="mobileFull" style={{ marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
           <h2>Share the weirdest unexplainable incident that’s happened in your life</h2>
         </div>
       </div>
