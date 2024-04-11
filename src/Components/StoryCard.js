@@ -21,7 +21,7 @@ function StoryCard({ timestamp, paragraph, url }) {
         paddingBottom: 30,
         position: 'relative',
         backgroundImage: `url(${url})`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         // backgroundRepeat: 'no-repeat'
     }
 
