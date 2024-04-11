@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 import '../PageLayout.css';
+import TextScrubber from './TextScrubber';
 
 function StoryCard({ timestamp, paragraph, url }) {
     const [isMuted, setIsMuted] = React.useState(false);
@@ -63,7 +64,8 @@ function StoryCard({ timestamp, paragraph, url }) {
                 </div>
 
             </div>
-            <span style={paragraphStyle}>{paragraph}</span>
+            {/* <span style={paragraphStyle}>{paragraph}</span> */}
+            <TextScrubber text={paragraph} />
             {/* <img src={url} /> */}
         </div>
     );
