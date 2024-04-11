@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Header from './Components/Header';
-import PageLayout from './Components/PageLayout';
+import StoryHome from './Components/StoryHome';
+import StoryList from './Components/StoryList';
 import './Fonts/Fonts.css';
 import './PageLayout.css';
 import NavHeader from './Components/NavHeader';
@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <NavHeader />
-      <Header />
-      <PageLayout />
+      <StoryHome />
+      <StoryList />
       {/* <header className="App-header">
 
       </header> */}

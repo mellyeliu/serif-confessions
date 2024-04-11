@@ -3,15 +3,17 @@ import StoryCard from './StoryCard';
 import { TestData } from '../TestData';
 import '../PageLayout.css'; // Assuming CSS is defined in PageLayout.css
 
-const PageLayout = () => {
+const StoryList = () => {
+  const storyCards = TestData.map((data, index) => (
+    <div style={{ marginTop: 30 }}>
+      <StoryCard {...data} key={index} />
+    </div>
+  ));
   return (
     <div>
-      <StoryCard {...TestData[0]} />
-      <StoryCard {...TestData[0]} />
-      <StoryCard {...TestData[0]} />
-      <StoryCard {...TestData[0]} />
+      {storyCards}
     </div>
   );
 };
 
-export default PageLayout;
+export default StoryList;

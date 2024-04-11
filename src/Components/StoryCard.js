@@ -1,50 +1,70 @@
 import React from 'react';
+import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
+import '../PageLayout.css';
 
-function StoryCard({ timestamp, paragraph, imageUrl }) {
-    // Inline CSS for the StoryCard component
+function StoryCard({ timestamp, paragraph, url }) {
+    const [isMuted, setIsMuted] = React.useState(false);
+
     const cardStyle = {
-        borderRadius: '15px', // Rounded corners
-        overflow: 'hidden', // Ensures content respects border radius
-        boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Optional: adds a shadow for depth
+        borderRadius: '15px',
+        overflow: 'hidden',
+        // boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
         margin: '20px',
         background: '#fff', // White background
-        maxWidth: '300px', // Adjust width as needed
-        maxWidth: "75%",
+        maxWidth: "50%",
+        minHeight: 400,
         marginLeft: 'auto',
         marginRight: 'auto',
-        padding: '20px',
+        paddingTop: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingBottom: 30,
+        position: 'relative',
+        backgroundImage: `url(${url})`,
+        backgroundSize: 'contain',
+        // backgroundRepeat: 'no-repeat'
     }
 
-    // Inline CSS for the timestamp
     const timestampStyle = {
-        position: 'absolute', // Positions timestamp in the top left corner
-        top: '10px',
-        left: '10px',
-        background: 'rgba(255, 255, 255, 0.7)', // Semi-transparent background
-        padding: '5px 10px',
-        borderRadius: '10px', // Rounded corners for the timestamp
+        color: 'grey',
+        float: 'left',
         fontSize: '12px',
     };
 
-    // Inline CSS for the paragraph
     const paragraphStyle = {
-        padding: '20px',
-        textAlign: 'center',
+        textAlign: 'left',
+        float: 'left',
         width: '100%',
+        fontFamily: "Source Serif 4, serif",
     };
 
-    // Inline CSS for the image
+    const iconStyle = {
+        marginLeft: 'auto',
+        cursor: 'pointer',
+    }
+
     const imageStyle = {
-        width: '100%', // Ensures the image covers the width of the card
-        display: 'block', // Removes bottom space/margin under the image
-        borderTop: '1px solid #eee', // Separates image from text visually
+        width: '100%',
+        display: 'block',
+        borderTop: '1px solid #eee',
     };
+
+    const toggleSound = () => {
+        setIsMuted(!isMuted);
+    }
+
 
     return (
         <div style={cardStyle}>
-            {/* <div style={timestampStyle}>{timestamp}</div> */}
+            <div style={{ display: "flex", height: 40 }}>
+                <div style={timestampStyle}>{timestamp}</div>
+                <div onClick={toggleSound} style={iconStyle}>
+                    {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
+                </div>
+
+            </div>
             <span style={paragraphStyle}>{paragraph}</span>
-            {/* <img src={imageUrl} style={imageStyle} /> */}
+            {/* <img src={url} /> */}
         </div>
     );
 }

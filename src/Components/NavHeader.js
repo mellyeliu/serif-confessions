@@ -8,14 +8,14 @@ const buttonStyle = {
   background: 'none',
   border: '1px solid black',
   borderRadius: 20,
-  padding: '5px 10px'
+  padding: '5px 10px',
 }
 
 function NavHeader() {
   return (
     <div style={NavHeaderStyle} className="nav-header">
       <div>
-        SERIF
+        <img src="/images/serif.png" />
       </div>
       <div style={{ marginLeft: 'auto' }}>
         <button style={buttonStyle}>Feed</button> <button style={buttonStyle}>Contact</button>
