@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../PageLayout.css';
 
 const TextScrubber = ({ text }) => {
     const words = text.split(' ');
@@ -23,6 +24,7 @@ const TextScrubber = ({ text }) => {
                 max={words.length - 1}
                 value={highlightedIndex}
                 onChange={handleScrubberChange}
+                className="scrubber"
             />
         </div>
     );
