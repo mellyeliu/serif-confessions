@@ -23,14 +23,14 @@ const StoryHome = () => {
   };
 
   return (
-    <div style={{ margin: "40px 0px" }}>
+    <div style={{ margin: "30px 0px" }}>
       <div className="body-row single one">
         <div style={{ color: "grey", float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
           <h4 style={{ marginBlockEnd: "0", }}>April 10, 2024</h4>
         </div>
       </div>
       <div className="body-row single one">
-        <div className="mobileFull" style={{ marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
+        <div className="mobileFull" style={{ marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '40%', alignItems: 'center' }}>
           <h2>Share the weirdest unexplainable incident that’s happened in your life</h2>
         </div>
       </div>

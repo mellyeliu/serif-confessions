@@ -12,7 +12,7 @@ function StoryCard({ timestamp, paragraph, url }) {
         // boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
         margin: '20px',
         background: '#fff', // White background
-        maxWidth: "50%",
+        width: "40%",
         minHeight: 400,
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -56,7 +56,7 @@ function StoryCard({ timestamp, paragraph, url }) {
 
 
     return (
-        <div style={cardStyle}>
+        <div className={'mobileSemiFull'} style={cardStyle}>
             <div style={{ display: "flex", height: 40 }}>
                 <div style={timestampStyle}>{timestamp}</div>
                 <div onClick={toggleSound} style={iconStyle}>

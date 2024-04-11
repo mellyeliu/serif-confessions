@@ -13,11 +13,16 @@ const TextScrubber = ({ text }) => {
         <div>
             <p style={{ width: '100%', color: 'black' }}>
                 {words.map((word, index) => (
-                    <span key={index} style={{ backgroundColor: index === highlightedIndex ? 'lightgrey' : 'transparent' }}>
-                        {word + ' '}
-                    </span>
+                    <>
+                        <span key={index} style={{ backgroundColor: index === highlightedIndex ? 'rgb(146, 146, 146)' : 'transparent' }}>
+                            {word}
+                        </span><span> </span>
+                    </>
                 ))}
+
+
             </p>
+
             <input
                 type="range"
                 min="0"
@@ -25,6 +30,7 @@ const TextScrubber = ({ text }) => {
                 value={highlightedIndex}
                 onChange={handleScrubberChange}
                 className="scrubber"
+
             />
         </div>
     );
