@@ -19,7 +19,7 @@ const StoryHome = () => {
   const handleCloseDialog = () => setIsDialogOpen(false);
   const handleSubmit = () => {
     console.log('Submit your story...');
-    handleCloseDialog(); // Optionally close dialog after submit
+    handleCloseDialog();
   };
 
   return (

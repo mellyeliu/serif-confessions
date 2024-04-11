@@ -1,7 +1,7 @@
 import React from 'react';
 import StoryCard from './StoryCard';
 import { TestData } from '../TestData';
-import '../PageLayout.css'; // Assuming CSS is defined in PageLayout.css
+import '../PageLayout.css';
 
 const StoryList = () => {
   const storyCards = TestData.map((data, index) => (

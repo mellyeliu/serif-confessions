@@ -6,7 +6,6 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         return null;
     };
 
-    // Styles
     const overlayStyle = {
         position: 'fixed',
         top: 0,
@@ -29,10 +28,10 @@ function Dialog({ isOpen, onClose, onSubmit }) {
     };
 
     const inputStyle = {
-        width: '75%', // Makes the input span 75% of the dialog's width
-        padding: '10px', // Adds some padding inside the input for better appearance
-        margin: '20px 0', // Adds margin above and below the input
-        fontSize: '16px', // Increases font size for better readability
+        width: '75%',
+        padding: '10px',
+        margin: '20px 0',
+        fontSize: '16px',
         borderRadius: 20,
         border: 'none',
         background: '#f6f6f6',
@@ -53,7 +52,6 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         cursor: 'pointer',
     };
 
-    // Handlers
     const handleOverlayClick = (e) => {
         e.stopPropagation(); // Prevents click inside dialog from closing it
     };
