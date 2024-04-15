@@ -56,7 +56,7 @@ function StoryCard({ timestamp, paragraph, url }) {
 
 
     return (
-        <div className={'mobileSemiFull'} style={cardStyle}>
+        <div className={'StoryCard mobileSemiFull'} style={cardStyle}>
             <div style={{ display: "flex", height: 40 }}>
                 <div style={timestampStyle}>{timestamp}</div>
                 <div onClick={toggleSound} style={iconStyle}>

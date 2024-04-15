@@ -14,7 +14,7 @@ const TextScrubber = ({ text }) => {
             <p style={{ width: '100%', color: 'black' }}>
                 {words.map((word, index) => (
                     <>
-                        <span key={index} style={{ backgroundColor: index === highlightedIndex ? 'rgb(146, 146, 146)' : 'transparent' }}>
+                        <span key={index} style={{ backgroundColor: index === highlightedIndex ? 'rgb(213 184 162)' : 'transparent' }}>
                             {word}
                         </span><span> </span>
                     </>
