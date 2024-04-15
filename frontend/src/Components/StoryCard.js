@@ -2,10 +2,11 @@ import React from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 import '../PageLayout.css';
 import TextScrubber from './TextScrubber';
+import { formatDistanceToNow } from 'date-fns';
 
-function StoryCard({ timestamp, paragraph, url }) {
+function StoryCard({ created_at, text, user_id }) {
     const [isMuted, setIsMuted] = React.useState(false);
-
+    const url = "/images/clouds.jpeg"
     const cardStyle = {
         borderRadius: '15px',
         overflow: 'hidden',
@@ -54,19 +55,20 @@ function StoryCard({ timestamp, paragraph, url }) {
         setIsMuted(!isMuted);
     }
 
+    const date = new Date(created_at);
+
+    const relativeTime = formatDistanceToNow(date, { addSuffix: true });
 
     return (
         <div className={'StoryCard mobileSemiFull'} style={cardStyle}>
             <div style={{ display: "flex", height: 40 }}>
-                <div style={timestampStyle}>{timestamp}</div>
+                <div style={timestampStyle}>{relativeTime}</div>
                 <div onClick={toggleSound} style={iconStyle}>
                     {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
                 </div>
 
             </div>
-            {/* <span style={paragraphStyle}>{paragraph}</span> */}
-            <TextScrubber text={paragraph} />
-            {/* <img src={url} /> */}
+            <TextScrubber text={text} />
         </div>
     );
 }

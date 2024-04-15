@@ -2,7 +2,6 @@ import React from 'react';
 
 function Dialog({ isOpen, onClose, onSubmit }) {
     if (!isOpen) {
-        console.log("noneee");
         return null;
     };
 
