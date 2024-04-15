@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dialog from './Dialog';
 import { BiSolidPencil } from "react-icons/bi";
-
+import { createClient } from "@supabase/supabase-js";
 
 const buttonStyle = {
   padding: '10px 0px',
@@ -12,7 +12,9 @@ const buttonStyle = {
   margin: '20px 0px',
 }
 
-const StoryHome = () => {
+const supabase = createClient("https://kovldxcnymhyquwknlln.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
+
+const StoryHome = (props) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleOpenDialog = () => setIsDialogOpen(true);
@@ -22,16 +24,21 @@ const StoryHome = () => {
     handleCloseDialog();
   };
 
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const today = new Date()
+  
+  const formattedDate = today.toLocaleDateString('en-US', options);
+
   return (
     <div style={{ margin: "30px 0px" }}>
       <div className="body-row single one">
         <div style={{ color: "grey", float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
-          <h4 style={{ marginBlockEnd: "0", }}>April 10, 2024</h4>
+          <h4 style={{ marginBlockEnd: "0", }}>{formattedDate}</h4>
         </div>
       </div>
       <div className="body-row single one">
         <div className="mobileFull" style={{ marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '40%', alignItems: 'center' }}>
-          <h2>Share the weirdest unexplainable incident that’s happened in your life</h2>
+          <h2>{props.prompt}</h2>
         </div>
       </div>
       <button onClick={handleOpenDialog} style={buttonStyle}><BiSolidPencil /> Share your story</button>
