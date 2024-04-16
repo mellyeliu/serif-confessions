@@ -16,7 +16,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
         const duration = audioRef.current.duration;
         const scrubberPosition = (currentTime / duration) * containerRef.current.clientWidth;
         setScrubberPosition(scrubberPosition);
-        setLevels(levels.map(() => Math.random()));
+        // setLevels(levels.map(() => Math.random()));
       }, 100);
     }
     return () => clearInterval(interval);
@@ -24,7 +24,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
 
 
   const handleMouseDown = (event) => {
-    // audioRef.current.pause();
+    audioRef.current.pause();
     const rect = containerRef.current.getBoundingClientRect();
     const clickPosition = event.clientX - rect.left;
     const duration = audioRef.current.duration;
@@ -39,7 +39,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
     };
 
     const onMouseUp = () => {
-        // audioRef.current.play();
+        audioRef.current.play();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
