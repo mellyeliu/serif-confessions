@@ -39,7 +39,7 @@ const StoryHome = (props) => {
         </div>
       </div>
       <div className="body-row single one">
-        <div className="mobileFull" style={{ marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '40%', alignItems: 'center' }}>
+        <div className="mobileFull Logo" style={{ cursor: 'default', marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '40%', alignItems: 'center' }}>
           <h2>{props.prompt}</h2>
         </div>
       </div>
