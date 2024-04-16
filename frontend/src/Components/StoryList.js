@@ -13,7 +13,7 @@ const StoryList = (props) => {
       audio_file = "audio/confession3.wav"
     }
     return (
-    <div style={{ marginTop: 30 }}>
+    <div className="mobileSnapItem" style={{ marginTop: 30 }}>
       <StoryCard {...data} audio_file={audio_file} key={index} full={false} />
     </div>
     )}
@@ -21,7 +21,7 @@ const StoryList = (props) => {
 
 
   return (
-    <div>
+    <div className="mobileSnap">
       {storyCards}
     </div>
   );

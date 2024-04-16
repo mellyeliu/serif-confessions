@@ -59,8 +59,10 @@ function App() {
         exit={{ opacity: 0 }}
         transition={{ duration: 1.5 }}
       >
-        <div className="App">
+      <div className="App">
+          <div className="">
           <NavHeader />
+          </div>
           <StoryHome prompt={currentPrompt ? currentPrompt.text : ""} />
           <Routes>
             <Route path="/" element={<StoryList confessions={confessions ?? []} />} />
