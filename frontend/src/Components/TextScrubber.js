@@ -30,7 +30,6 @@ const TextScrubber = ({ text }) => {
                 value={highlightedIndex}
                 onChange={handleScrubberChange}
                 className="scrubber"
-
             />
         </div>
     );

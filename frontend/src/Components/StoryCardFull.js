@@ -83,7 +83,7 @@ function StoryCardFull({ created_at, text, user_id }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
         >
-            <div className={'mobileSemiFull'} style={cardStyle}>
+            <div className={'mobile75Full'} style={cardStyle}>
                 <div style={{ display: "flex", height: 40 }}>
                     <div style={timestampStyle}>{relativeTime}</div>
                     <div onClick={toggleSound} style={iconStyle}>

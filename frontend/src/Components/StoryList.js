@@ -5,12 +5,19 @@ import '../PageLayout.css';
 import { createClient } from "@supabase/supabase-js";
 
 const StoryList = (props) => {
-  console.log(props.confessions);
-  const storyCards = props.confessions.map((data, index) => (
+  const storyCards = props.confessions.map((data, index) => {
+    let audio_file = "audio/confession1.wav"
+    if (index === 1) {
+      audio_file = "audio/confession2.wav"
+    } else if (index === 2) {
+      audio_file = "audio/confession3.wav"
+    }
+    return (
     <div style={{ marginTop: 30 }}>
-      <StoryCard {...data} key={index} />
+      <StoryCard {...data} audio_file={audio_file} key={index} />
     </div>
-  ));
+    )}
+  );
 
 
   return (
