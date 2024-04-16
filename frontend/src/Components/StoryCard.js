@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 import '../PageLayout.css';
 import TextScrubber from './TextScrubber';
@@ -10,6 +10,22 @@ import { useNavigate } from 'react-router-dom';
 function StoryCard({ created_at, text, user_id, id }) {
     const navigate = useNavigate();
     const [isMuted, setIsMuted] = React.useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+    const handleMouseDown = (e) => {
+        setDragStart({
+            x: e.clientX,
+            y: e.clientY
+        });
+    };
+
+    const handleClick = (e) => {
+        // Check if the mouse has moved more than a reasonable threshold
+        if (!(Math.abs(dragStart.x - e.clientX) < 10 && Math.abs(dragStart.y - e.clientY) < 10)) {
+            navigate(`/card/${id}`);
+        }
+    };
+
     const url = "/images/clouds.jpeg"
     const cardStyle = {
         borderRadius: '15px',
@@ -61,13 +77,17 @@ function StoryCard({ created_at, text, user_id, id }) {
         setIsMuted(!isMuted);
     }
 
-    const handleClick = (id) => {
-        navigate(`/card/${id}`);
-    };
+    const handleImageClick = (e) => {
+        e.stopPropagation();
+    }
+
+    // const handleClick = (id) => {
+    //     navigate(`/card/${id}`);
+    // };
 
     const desktopItems = {
         a: { top: 13, left: 5, url: '/images/bg1.jpg', angle: -7 },
-        b: { top: 6, left: 20, url: '/images/bg1.jpg', angle: 4 },
+        b: { top: 0, left: 20, url: '/images/bg1.jpg', angle: 4 },
         c: { top: 21, left: 45, url: '/images/bg1.jpg', angle: -3 },
         d: { top: 7, left: 60, url: '/images/bg1.jpg', angle: 10 },
         e: { top: 13, left: 75, url: '/images/bg1.jpg', angle: 4 },
@@ -83,17 +103,17 @@ function StoryCard({ created_at, text, user_id, id }) {
     const relativeTime = formatDistanceToNow(date, { addSuffix: true });
 
     return (
-        <div className={'StoryCard mobileSemiFull'} style={cardStyle} onClick={() => handleClick(id)}>
+        <div className={'StoryCard mobileSemiFull'} style={cardStyle} onClick={handleClick}>
             <div style={{ display: "flex", height: 40 }}>
                 <div style={timestampStyle}>{relativeTime}</div>
                 <div onClick={toggleSound} style={iconStyle}>
                     {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
                 </div>
             </div>
-            <div className="desktopImages">
+            <div className="desktopImages" onClick={handleImageClick}>
                 <Images items={desktopItems} />
             </div>
-            <div className="mobileImages">
+            <div className="mobileImages" onClick={handleImageClick}>
                 <Images items={mobileItems} />
             </div>
             <TextScrubber text={text} />

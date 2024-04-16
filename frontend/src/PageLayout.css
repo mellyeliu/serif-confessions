@@ -133,8 +133,9 @@
 
   .mobileImages {
     display: block !important;
-    transform: scale(0.7);
-    max-height: 150px;
+    transform: scale(0.8);
+    max-height: 170px;
+    padding-top: 10px;
   }
 
 }

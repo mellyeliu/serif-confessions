@@ -60,11 +60,11 @@ function StoryCardFull({ created_at, text, user_id }) {
     }
 
     const desktopItems = {
-        a: { top: 10, left: 20, url: '/images/bg1.jpg', angle: -7 },
-        b: { top: 4, left: 30, url: '/images/bg1.jpg', angle: 4 },
-        c: { top: 18, left: 55, url: '/images/bg1.jpg', angle: -3 },
-        d: { top: 5, left: 67, url: '/images/bg1.jpg', angle: 10 },
-        e: { top: 10, left: 79, url: '/images/bg1.jpg', angle: 4 },
+        a: { top: 10, left: 15, url: '/images/bg1.jpg', angle: -7 },
+        b: { top: 4, left: 25, url: '/images/bg1.jpg', angle: 4 },
+        c: { top: 18, left: 45, url: '/images/bg1.jpg', angle: -3 },
+        d: { top: 5, left: 60, url: '/images/bg1.jpg', angle: 10 },
+        e: { top: 10, left: 71, url: '/images/bg1.jpg', angle: 4 },
     };
 
     const mobileItems = {
@@ -90,7 +90,7 @@ function StoryCardFull({ created_at, text, user_id }) {
                         {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
                     </div>
                 </div>
-                <div className="desktopImages">
+                <div style={{ transform: 'scale(1.2)', paddingTop: 30, minHeight: 300 }} className="desktopImages">
                     <Images items={desktopItems} />
                 </div>
                 <div className="mobileImages">
