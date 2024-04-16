@@ -7,7 +7,7 @@ import Images from './Images';
 import { useNavigate } from 'react-router-dom';
 
 
-function StoryCard({ created_at, text, user_id, audio_file, id }) {
+function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
     const navigate = useNavigate();
     const [isMuted, setIsMuted] = React.useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -47,11 +47,11 @@ function StoryCard({ created_at, text, user_id, audio_file, id }) {
     const cardStyle = {
         borderRadius: '15px',
         overflow: 'hidden',
-        // boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        border: '0.5px solid grey',
         margin: '20px',
         background: '#fff', // White background
-        width: "40%",
-        minHeight: 400,
+        width: full ? "50%" : "40%",
+        minHeight: full ? 600 : 400,
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 30,
@@ -61,9 +61,6 @@ function StoryCard({ created_at, text, user_id, audio_file, id }) {
         paddingBottom: 30,
         position: 'relative',
         background: 'white',
-        // backgroundImage: `url(${url})`,
-        // backgroundSize: 'cover',
-        // backgroundRepeat: 'no-repeat'
     }
 
     const timestampStyle = {
@@ -90,7 +87,8 @@ function StoryCard({ created_at, text, user_id, audio_file, id }) {
         borderTop: '1px solid #eee',
     };
 
-    const toggleSound = () => {
+    const toggleSound = (e) => {
+        e.stopPropagation();
         setIsMuted(!isMuted);
     }
 

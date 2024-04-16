@@ -25,7 +25,7 @@ function NavHeader() {
 
   return (
     <div style={NavHeaderStyle} className="nav-header">
-      <div>
+      <div style={{ cursor: 'pointer' }} onClick={handleClick}>
         <div className="Editorial" style={{ letterSpacing: -0.5, fontSize: 24, color: 'black'}}>serif</div>
         {/* <img style={{ cursor: 'pointer' }} onClick={handleClick} src="/images/serif.png" /> */}
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import StoryCardFull from './StoryCardFull';
+import StoryCard from './StoryCard';
 import { createClient } from "@supabase/supabase-js";
 
 // Wrapper component that could also receive additional global or context props
@@ -21,7 +21,7 @@ const StoryCardFullWrapper = ({ confessions }) => {
     };
 
     // You can now pass both the `id` and other props to the CardDetail component
-    return <StoryCardFull {...confession} />;
+    return <StoryCard full={true} {...confession} />;
 };
 
 export default StoryCardFullWrapper;
