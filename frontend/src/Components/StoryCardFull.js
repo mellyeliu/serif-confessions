@@ -17,7 +17,7 @@ function StoryCardFull({ created_at, text, user_id }) {
         margin: '20px',
         background: '#fff', // White background
         width: "60%",
-        minHeight: 1000,
+        minHeight: 600,
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 30,
