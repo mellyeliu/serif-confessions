@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 
-function AudioScrubber({text, isMuted}) {
+function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
   const words = text.split(" ");
   const numBars = 100;
   const [levels, setLevels] = useState(Array.from({ length: numBars }, () => Math.random() ));
@@ -10,9 +10,13 @@ function AudioScrubber({text, isMuted}) {
 
   useEffect(() => {
     let interval = null;
-    if (!isMuted) {
+    if (!isMuted && audioRef.current) {
       interval = setInterval(() => {
-        setLevels(levels.map(() => Math.random() * 0.95 + 0.05));
+        const currentTime = audioRef.current.currentTime;
+        const duration = audioRef.current.duration;
+        const scrubberPosition = (currentTime / duration) * containerRef.current.clientWidth;
+        setScrubberPosition(scrubberPosition);
+        setLevels(levels.map(() => Math.random()));
       }, 100);
     }
     return () => clearInterval(interval);
@@ -20,20 +24,22 @@ function AudioScrubber({text, isMuted}) {
 
 
   const handleMouseDown = (event) => {
-    if (!containerRef.current) return;
+    // audioRef.current.pause();
     const rect = containerRef.current.getBoundingClientRect();
     const clickPosition = event.clientX - rect.left;
-    setScrubberPosition(clickPosition);
+    const duration = audioRef.current.duration;
+    const newTime = (clickPosition / containerRef.current.clientWidth) * duration;
+    setCurrentTime(newTime);
 
     const onMouseMove = (moveEvent) => {
-      if (!containerRef.current) return;
       const currentX = moveEvent.clientX - rect.left;
-      const deltaX = currentX - clickPosition;
-      const newScrubberPosition = Math.min(Math.max(clickPosition + deltaX, 0), containerRef.current.clientWidth);
-      setScrubberPosition(newScrubberPosition);
+      const newScrubberPosition = Math.min(Math.max(currentX, 0), containerRef.current.clientWidth);
+      const newTime = (newScrubberPosition / containerRef.current.clientWidth) * duration;
+      setCurrentTime(newTime);
     };
 
     const onMouseUp = () => {
+        // audioRef.current.play();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };

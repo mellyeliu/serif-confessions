@@ -38,6 +38,12 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
         }
     };
 
+    const handleSetCurrentTime = (time) => {
+    if (audioRef.current) {
+        audioRef.current.currentTime = time;
+    }
+    };
+
 
     const handleClick = (e) => {
         // Check if the mouse has moved more than a reasonable threshold
@@ -138,7 +144,7 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
             </div>
             <div onClick={handleImageClick}>
             {/* <TextScrubber text={text} /> */}
-            <AudioScrubber text={text} isMuted={isMuted}/>
+            <AudioScrubber setCurrentTime={handleSetCurrentTime} audioRef={audioRef}  text={text} isMuted={isMuted}/>
             </div>
 
             <audio ref={audioRef} src={audio_file}></audio>
