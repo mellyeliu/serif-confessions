@@ -61,7 +61,7 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         borderRadius: 20,
         border: 'none',
         background: '#f6f6f6',
-        minHeight: 150,
+        minHeight: 200,
     }
 
     const submitButtonStyle = {
@@ -89,7 +89,7 @@ function Dialog({ isOpen, onClose, onSubmit }) {
                 <h3>Visualize your story</h3>
                 <div style={{ position: 'relative' }}>
                     <textarea type="text" value={text} onChange={handleChange} style={inputStyle} />
-                    <div style={{ fontSize: 11, position: 'absolute', bottom: '22px', right: '45px', color: wordCountColor }}>
+                    <div style={{ fontSize: 11, position: 'absolute', bottom: '22px', right: '55px', color: wordCountColor }}>
                         {wordCount}/{maxWords} words
                     </div>
                 </div>
