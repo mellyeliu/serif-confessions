@@ -61,7 +61,7 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         borderRadius: 20,
         border: 'none',
         background: '#f6f6f6',
-        minHeight: 200,
+        minHeight: 150,
     }
 
     const submitButtonStyle = {
@@ -84,12 +84,12 @@ function Dialog({ isOpen, onClose, onSubmit }) {
 
     return (
         <div style={overlayStyle} onClick={onClose}>
-            <div className="mobileVeryFull" style={dialogStyle} onClick={handleOverlayClick}>
+            <div className="mobileSemiFull" style={dialogStyle} onClick={handleOverlayClick}>
                 {/* <div style={closeButtonStyle} onClick={onClose}>X</div> */}
                 <h3>Visualize your story</h3>
                 <div style={{ position: 'relative' }}>
                     <textarea type="text" value={text} onChange={handleChange} style={inputStyle} />
-                    <div style={{ fontSize: 11, position: 'absolute', bottom: '22px', right: '55px', color: wordCountColor }}>
+                    <div style={{ fontSize: 11, position: 'absolute', bottom: '22px', right: '5px', color: wordCountColor }}>
                         {wordCount}/{maxWords} words
                     </div>
                 </div>

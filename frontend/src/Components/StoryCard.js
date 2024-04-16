@@ -103,7 +103,7 @@ function StoryCard({ created_at, text, user_id, id }) {
     const relativeTime = formatDistanceToNow(date, { addSuffix: true });
 
     return (
-        <div className={'StoryCard mobileSemiFull'} style={cardStyle} onClick={handleClick}>
+        <div className={'StoryCard mobile75Full'} style={cardStyle} onClick={handleClick}>
             <div style={{ display: "flex", height: 40 }}>
                 <div style={timestampStyle}>{relativeTime}</div>
                 <div onClick={toggleSound} style={iconStyle}>

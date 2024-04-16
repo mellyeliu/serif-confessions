@@ -80,6 +80,11 @@
     width: 80% !important;
   }
 
+  .mobile75Full {
+    width: 75% !important;
+  }
+
+
   .mobileSemiFull {
     width: 60% !important;
   }
@@ -156,6 +161,10 @@ span {
   font-family: "Sedan", serif;
 }
 
+h1 {
+  font-family: "Editorial New";
+}
+
 .page-container {
   font-family: Arial, sans-serif;
   background-color: #F6F5EF;
@@ -223,9 +232,14 @@ h4 {
   font-family: 'EditorialNewP';
 }
 
+.Editorial {
+  font-family: 'EditorialNewP';
+}
+
 
 p {
   color: #9a9a9a;
   font-size: 16px;
   text-align: left;
+  font-family: 'EditorialNewP';
 }
