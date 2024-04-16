@@ -72,6 +72,22 @@
     box-sizing: border-box !important;
   }
 
+  .mobileSnapBuffer {
+    /* height: 100vh !important; */
+  }
+
+  /* .mobileSnap {
+    height: 100vh !important;
+    overflow-y: scroll !important;
+    scroll-snap-type: y mandatory !important;
+  }
+
+  .mobileSnapItem {
+    height: 85vh !important;
+    scroll-snap-align: start !important;
+    display: flex !important;
+  } */
+
   .mobileFull {
     width: 100% !important;
   }

@@ -49,6 +49,8 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
         overflow: 'hidden',
         border: '0.5px solid grey',
         margin: '20px',
+        // backgroundImage: 'url(/images/paper.jpg)',
+        // backgroundSize: 'cover',
         background: '#fff', // White background
         width: full ? "50%" : "40%",
         minHeight: full ? 600 : 400,
