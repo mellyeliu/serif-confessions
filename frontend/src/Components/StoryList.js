@@ -14,7 +14,7 @@ const StoryList = (props) => {
     }
     return (
     <div style={{ marginTop: 30 }}>
-      <StoryCard {...data} audio_file={audio_file} key={index} />
+      <StoryCard {...data} audio_file={audio_file} key={index} full={false} />
     </div>
     )}
   );
