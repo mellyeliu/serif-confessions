@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Dialog({ isOpen, onClose, onSubmit }) {
+    const [text, setText] = useState('');
     if (!isOpen) {
         return null;
     };
+
+
+    const handleChange = (event) => {
+        setText(event.target.value);
+    };
+
+    // Calculate the number of words directly in the render method to ensure updates
+    const calculateWordCount = (text) => {
+        // Trim leading and trailing spaces to avoid empty matches in split array
+        if (text.length === 0) return 0;
+        const words = text.trim().split(/\s+/);  // Split by any whitespace
+        return words.length;
+    };
+
+    const wordCount = calculateWordCount(text);
+    const maxWords = 150;
+
+
+    const handleOverlayClick = (e) => {
+        e.stopPropagation(); // Prevents click inside dialog from closing it
+    };
+
+    const isOverLimit = wordCount > maxWords;
+
+    const wordCountColor = wordCount > maxWords ? 'red' : 'rgb(150,150,150)';
 
     const overlayStyle = {
         position: 'fixed',
@@ -20,30 +46,33 @@ function Dialog({ isOpen, onClose, onSubmit }) {
 
     const dialogStyle = {
         width: '50%',
-        padding: '20px',
+        padding: '30px 10px',
         backgroundColor: 'white',
         borderRadius: '8px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        position: 'relative',
     };
 
     const inputStyle = {
-        width: '75%',
-        padding: '10px',
-        margin: '20px 0',
-        fontSize: '16px',
+        width: '85%',
+        padding: '15px 10px 25px 10px',
+        margin: '10px 0',
+        fontSize: '12px',
         borderRadius: 20,
         border: 'none',
         background: '#f6f6f6',
-        minHeight: 100,
+        minHeight: 150,
     }
 
     const submitButtonStyle = {
-        padding: '10px 0px',
+        padding: '13px 0px',
         width: 200,
         borderRadius: 20,
-        background: 'black',
+        background: isOverLimit ? 'grey' : 'black',
+        cursor: isOverLimit ? 'not-allowed' : 'pointer',
         color: 'white',
         margin: '10px 0px',
+        border: 'none'
     }
 
     const closeButtonStyle = {
@@ -51,17 +80,21 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         cursor: 'pointer',
     };
 
-    const handleOverlayClick = (e) => {
-        e.stopPropagation(); // Prevents click inside dialog from closing it
-    };
+
 
     return (
         <div style={overlayStyle} onClick={onClose}>
-            <div style={dialogStyle} onClick={handleOverlayClick}>
-                <div style={closeButtonStyle} onClick={onClose}>X</div>
+            <div className="mobileVeryFull" style={dialogStyle} onClick={handleOverlayClick}>
+                {/* <div style={closeButtonStyle} onClick={onClose}>X</div> */}
                 <h3>Visualize your story</h3>
-                <input type="text" style={inputStyle} />
-                <button onClick={onSubmit} style={submitButtonStyle}>Submit</button>
+                <div style={{ position: 'relative' }}>
+                    <textarea type="text" value={text} onChange={handleChange} style={inputStyle} />
+                    <div style={{ fontSize: 11, position: 'absolute', bottom: '22px', right: '45px', color: wordCountColor }}>
+                        {wordCount}/{maxWords} words
+                    </div>
+                </div>
+                <button disabled={wordCount > maxWords} onClick={onSubmit} style={submitButtonStyle}>Post</button>
+                <div style={{ marginTop: 5, textAlign: 'center', fontSize: 11, color: 'grey' }}>You cannot edit this after posting</div>
             </div>
         </div>
     );

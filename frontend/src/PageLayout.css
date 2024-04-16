@@ -32,9 +32,9 @@
   -webkit-appearance: none;
   width: 80%;
   height: 4px;
-  background: #ddd;
   border: 1px solid rgb(190, 190, 190);
   border-radius: 10px;
+  background: lightgray;
   outline: none;
   opacity: 0.7;
   transition: opacity .2s;
@@ -51,11 +51,11 @@
 .scrubber::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 10px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 10px;
   border: 1px solid rgb(53, 53, 53);
-  background: rgb(67, 67, 67);
+  background: white;
   cursor: pointer;
 }
 
@@ -74,6 +74,10 @@
 
   .mobileFull {
     width: 100% !important;
+  }
+
+  .mobileVeryFull {
+    width: 80% !important;
   }
 
   .mobileSemiFull {
@@ -135,6 +139,14 @@
 
 }
 
+.animated-button:hover {
+  transform: scale(1.04);
+}
+
+.animated-button {
+  transition: 0.3s;
+}
+
 .mobileImages {
   display: none;
 }
@@ -165,12 +177,31 @@ span {
   justify-content: space-around;
 }
 
+.header-button:hover {
+  background: black !important;
+  color: white !important;
+}
+
+/* .dialog-button:hover {
+  border: 1px solid black !important;
+  background: none !important;
+  color: black !important;
+}
+
+.dialog-button {
+  transition: 0.3s;
+} */
+
+
+.header-button {
+  transition: 0.3s;
+}
 
 
 h2 {
   font-weight: 300;
   text-align: center;
-  font-size: 42px;
+  font-size: 44px;
   font-family: 'EditorialNewP';
   margin: 10px;
 }
@@ -194,6 +225,6 @@ h4 {
 
 p {
   color: #9a9a9a;
-  font-size: 18px;
+  font-size: 16px;
   text-align: left;
 }

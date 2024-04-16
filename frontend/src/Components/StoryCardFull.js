@@ -4,11 +4,10 @@ import '../PageLayout.css';
 import TextScrubber from './TextScrubber';
 import { formatDistanceToNow } from 'date-fns';
 import Images from './Images';
-import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 
-function StoryCard({ created_at, text, user_id, id }) {
-    const navigate = useNavigate();
+function StoryCardFull({ created_at, text, user_id }) {
     const [isMuted, setIsMuted] = React.useState(false);
     const url = "/images/clouds.jpeg"
     const cardStyle = {
@@ -17,14 +16,13 @@ function StoryCard({ created_at, text, user_id, id }) {
         // boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
         margin: '20px',
         background: '#fff', // White background
-        width: "40%",
-        minHeight: 400,
+        width: "60%",
+        minHeight: 1000,
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 30,
         paddingLeft: 30,
         paddingRight: 30,
-        cursor: 'pointer',
         paddingBottom: 30,
         position: 'relative',
         background: 'white',
@@ -61,16 +59,12 @@ function StoryCard({ created_at, text, user_id, id }) {
         setIsMuted(!isMuted);
     }
 
-    const handleClick = (id) => {
-        navigate(`/card/${id}`);
-    };
-
     const desktopItems = {
-        a: { top: 10, left: 0, url: '/images/bg1.jpg', angle: -7 },
-        b: { top: 4, left: 20, url: '/images/bg1.jpg', angle: 4 },
-        c: { top: 18, left: 45, url: '/images/bg1.jpg', angle: -3 },
-        d: { top: 5, left: 60, url: '/images/bg1.jpg', angle: 10 },
-        e: { top: 10, left: 75, url: '/images/bg1.jpg', angle: 4 },
+        a: { top: 10, left: 20, url: '/images/bg1.jpg', angle: -7 },
+        b: { top: 4, left: 30, url: '/images/bg1.jpg', angle: 4 },
+        c: { top: 18, left: 55, url: '/images/bg1.jpg', angle: -3 },
+        d: { top: 5, left: 67, url: '/images/bg1.jpg', angle: 10 },
+        e: { top: 10, left: 79, url: '/images/bg1.jpg', angle: 4 },
     };
 
     const mobileItems = {
@@ -78,27 +72,34 @@ function StoryCard({ created_at, text, user_id, id }) {
         b: { top: -5, left: 35, url: '/images/bg1.jpg', angle: 4 },
     };
 
-    const date = new Date(created_at);
+    const date = new Date(created_at ? created_at : Date.now());
 
     const relativeTime = formatDistanceToNow(date, { addSuffix: true });
 
     return (
-        <div className={'StoryCard mobileSemiFull'} style={cardStyle} onClick={() => handleClick(id)}>
-            <div style={{ display: "flex", height: 40 }}>
-                <div style={timestampStyle}>{relativeTime}</div>
-                <div onClick={toggleSound} style={iconStyle}>
-                    {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+        >
+            <div className={'mobileSemiFull'} style={cardStyle}>
+                <div style={{ display: "flex", height: 40 }}>
+                    <div style={timestampStyle}>{relativeTime}</div>
+                    <div onClick={toggleSound} style={iconStyle}>
+                        {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
+                    </div>
                 </div>
+                <div className="desktopImages">
+                    <Images items={desktopItems} />
+                </div>
+                <div className="mobileImages">
+                    <Images items={mobileItems} />
+                </div>
+                <TextScrubber text={text} />
             </div>
-            <div className="desktopImages">
-                <Images items={desktopItems} />
-            </div>
-            <div className="mobileImages">
-                <Images items={mobileItems} />
-            </div>
-            <TextScrubber text={text} />
-        </div>
+        </motion.div>
     );
 }
 
-export default StoryCard;
+export default StoryCardFull;

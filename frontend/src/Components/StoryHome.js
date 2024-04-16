@@ -4,12 +4,14 @@ import { BiSolidPencil } from "react-icons/bi";
 import { createClient } from "@supabase/supabase-js";
 
 const buttonStyle = {
-  padding: '10px 0px',
+  padding: '14px 0px',
   width: 200,
   borderRadius: 20,
   background: 'black',
   color: 'white',
   margin: '20px 0px',
+  cursor: 'pointer',
+  border: 'none'
 }
 
 const supabase = createClient("https://kovldxcnymhyquwknlln.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
@@ -41,7 +43,7 @@ const StoryHome = (props) => {
           <h2>{props.prompt}</h2>
         </div>
       </div>
-      <button onClick={handleOpenDialog} style={buttonStyle}><BiSolidPencil /> Share your story</button>
+      <button className="animated-button" onClick={handleOpenDialog} style={buttonStyle}><BiSolidPencil /> Share your story</button>
       <Dialog
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
