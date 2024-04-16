@@ -3,6 +3,7 @@ import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 import '../PageLayout.css';
 import TextScrubber from './TextScrubber';
 import { formatDistanceToNow } from 'date-fns';
+import Images from './Images';
 
 function StoryCard({ created_at, text, user_id }) {
     const [isMuted, setIsMuted] = React.useState(false);
@@ -22,8 +23,9 @@ function StoryCard({ created_at, text, user_id }) {
         paddingRight: 30,
         paddingBottom: 30,
         position: 'relative',
-        backgroundImage: `url(${url})`,
-        backgroundSize: 'cover',
+        background: 'white',
+        // backgroundImage: `url(${url})`,
+        // backgroundSize: 'cover',
         // backgroundRepeat: 'no-repeat'
     }
 
@@ -55,6 +57,19 @@ function StoryCard({ created_at, text, user_id }) {
         setIsMuted(!isMuted);
     }
 
+    const desktopItems = {
+        a: { top: 10, left: 0, url: '/images/bg1.jpg', angle: -7 },
+        b: { top: 4, left: 20, url: '/images/bg1.jpg', angle: 4 },
+        c: { top: 18, left: 45, url: '/images/bg1.jpg', angle: -3 },
+        d: { top: 5, left: 60, url: '/images/bg1.jpg', angle: 10 },
+        e: { top: 10, left: 75, url: '/images/bg1.jpg', angle: 4 },
+    };
+
+    const mobileItems = {
+        a: { top: -10, left: 0, url: '/images/bg1.jpg', angle: -7 },
+        b: { top: -5, left: 20, url: '/images/bg1.jpg', angle: 4 },
+    };
+
     const date = new Date(created_at);
 
     const relativeTime = formatDistanceToNow(date, { addSuffix: true });
@@ -66,7 +81,12 @@ function StoryCard({ created_at, text, user_id }) {
                 <div onClick={toggleSound} style={iconStyle}>
                     {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
                 </div>
-
+            </div>
+            <div className="desktopImages">
+                <Images items={desktopItems} />
+            </div>
+            <div className="mobileImages">
+                <Images items={mobileItems} />
             </div>
             <TextScrubber text={text} />
         </div>
