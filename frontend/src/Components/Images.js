@@ -54,7 +54,7 @@ const Container = ({ items }) => {
     const [currentZ, setCurrentZ] = useState(1);
 
     return (
-        <div className="container" style={{ position: 'relative', width: '90%', height: '30vh', userSelect: 'none' }}>
+        <div className="container" style={{ padding: "15px 0px", position: 'relative', width: '90%', height: '30vh', userSelect: 'none' }}>
             {Object.keys(items).map(key => {
                 const { left, top, url, angle } = items[key];
                 return (

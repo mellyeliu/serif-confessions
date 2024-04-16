@@ -12,6 +12,7 @@ const buttonStyle = {
   borderRadius: 20,
   padding: '5px 10px',
   marginLeft: 10,
+  cursor: 'pointer',
 }
 
 

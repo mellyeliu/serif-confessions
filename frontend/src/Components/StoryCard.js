@@ -66,11 +66,11 @@ function StoryCard({ created_at, text, user_id, id }) {
     };
 
     const desktopItems = {
-        a: { top: 10, left: 0, url: '/images/bg1.jpg', angle: -7 },
-        b: { top: 4, left: 20, url: '/images/bg1.jpg', angle: 4 },
-        c: { top: 18, left: 45, url: '/images/bg1.jpg', angle: -3 },
-        d: { top: 5, left: 60, url: '/images/bg1.jpg', angle: 10 },
-        e: { top: 10, left: 75, url: '/images/bg1.jpg', angle: 4 },
+        a: { top: 13, left: 5, url: '/images/bg1.jpg', angle: -7 },
+        b: { top: 6, left: 20, url: '/images/bg1.jpg', angle: 4 },
+        c: { top: 21, left: 45, url: '/images/bg1.jpg', angle: -3 },
+        d: { top: 7, left: 60, url: '/images/bg1.jpg', angle: 10 },
+        e: { top: 13, left: 75, url: '/images/bg1.jpg', angle: 4 },
     };
 
     const mobileItems = {
