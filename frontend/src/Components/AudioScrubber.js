@@ -3,7 +3,7 @@ import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 
 function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
   const words = text.split(" ");
-  const numBars = 100;
+  const numBars = 150;
   const [levels, setLevels] = useState(Array.from({ length: numBars }, () => Math.random() ));
   const [scrubberPosition, setScrubberPosition] = useState(0);
   const containerRef = useRef(null);
