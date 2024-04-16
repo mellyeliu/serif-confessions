@@ -5,11 +5,12 @@ import TextScrubber from './TextScrubber';
 import { formatDistanceToNow } from 'date-fns';
 import Images from './Images';
 import { useNavigate } from 'react-router-dom';
+import AudioScrubber from './AudioScrubber';
 
 
 function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
     const navigate = useNavigate();
-    const [isMuted, setIsMuted] = React.useState(false);
+    const [isMuted, setIsMuted] = React.useState(true);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
     const handleMouseDown = (e) => {
@@ -23,6 +24,7 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
 
     // Play audio when mouse enters the element
     const handleMouseEnter = () => {
+        setIsMuted(false);
         if (audioRef.current) {
             audioRef.current.play();
         }
@@ -30,6 +32,7 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
 
     // Pause audio when mouse leaves the element
     const handleMouseLeave = () => {
+        setIsMuted(true);
         if (audioRef.current) {
             audioRef.current.pause();
         }
@@ -134,7 +137,8 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
                 <Images items={mobileItems} />
             </div>
             <div onClick={handleImageClick}>
-            <TextScrubber text={text} />
+            {/* <TextScrubber text={text} /> */}
+            <AudioScrubber text={text} isMuted={isMuted}/>
             </div>
 
             <audio ref={audioRef} src={audio_file}></audio>
