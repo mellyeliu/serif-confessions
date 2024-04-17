@@ -66,6 +66,25 @@
   cursor: pointer;
 }
 
+.mobileScrubber {
+  display: none !important;
+}
+
+.desktopScrubber {
+  display: flex !important;
+}
+
+@media (max-width: 1100px) {
+  .mobileScrubber {
+    display: flex !important;
+  }
+
+  .desktopScrubber {
+    display: none !important;
+  }
+
+}
+
 @media (max-width: 700px) {
   .page-container {
     overflow: hidden;
@@ -150,6 +169,14 @@
 
   .desktopImages {
     display: none;
+  }
+
+  .mobileScrubber {
+    display: flex !important;
+  }
+
+  .desktopScrubber {
+    display: none !important;
   }
 
   .mobileImages {

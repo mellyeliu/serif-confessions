@@ -1,14 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 
+function getNumBars() {
+  const screenWidth = window.innerWidth;
+  console.log(screenWidth);
+  if (screenWidth > 1200) {
+
+    return 175;
+  } else if (screenWidth > 900) {
+
+    return 135;
+  } else if (screenWidth > 700) {
+
+    return 90;
+  } else if (screenWidth > 500) {
+
+    return 150;
+  } else {
+
+    return 55;
+  }
+}
+
+function setupListeners() {
+  window.addEventListener('resize', getNumBars);
+  window.addEventListener('unload', function() {
+    window.removeEventListener('resize', getNumBars);
+  });
+}
+
+// Apply styles on load and set up listeners
+document.addEventListener('DOMContentLoaded', function() {
+  getNumBars();
+  setupListeners();
+});
+
 function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
+  const screenWidth = window.innerWidth;
+  console.log(screenWidth);
   const words = text.split(" ");
   const numBars = 150;
-  const [levels, setLevels] = useState(Array.from({ length: numBars }, () => Math.random() ));
+  const numBarsMobile = 75;
+  const [levels, setLevels] = useState(Array.from({ length: numBars }, () => Math.random() * 0.95 + 0.05 ));
+  const [levels2, setLevels2] = useState(Array.from({ length: numBarsMobile }, () => Math.random() * 0.95 + 0.05 ));
   const [scrubberPosition, setScrubberPosition] = useState(0);
   const containerRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let interval = null;
     if (!isMuted && audioRef.current) {
       interval = setInterval(() => {
@@ -49,6 +87,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
   };
 
   const wordIndex = containerRef.current ? Math.min(Math.floor((scrubberPosition / containerRef.current.clientWidth) * numBars * (words.length / numBars)), words.length - 1) : 0;
+  const wordIndexMobile = containerRef.current ? Math.min(Math.floor((scrubberPosition / containerRef.current.clientWidth) * numBarsMobile * (words.length / numBarsMobile)), words.length - 1) : 0;
 
   return (
     <div>
@@ -63,19 +102,42 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
     </p>
       <div ref={containerRef} style={{ width: "95%", marginRight: 'auto', marginLeft: 'auto', display: 'flex', height: '50px', gap: '2px', position: 'relative', userSelect: 'none' }}
         onMouseDown={handleMouseDown}>
-            {/* <div onClick={toggleSound} style={iconStyle}>
-                    {isMuted ? <FaVolumeXmark /> : <FaVolumeHigh />}
-                </div> */}
-            {/* <div style={{
-              backgroundColor: 'black',
-              borderRadius: '5px',
-              width: '1px',
-            }}/> */}
         {levels.map((level, index) => (
           <div
             key={index}
+            className="desktopScrubber"
             style={{
-              backgroundColor: index <= Math.floor(wordIndex * (numBars / words.length)) ? 'black' : 'grey',
+              backgroundColor: index <= Math.floor(wordIndex * (numBars / words.length)) ? '#474747' : '#c3c3c3',
+              borderRadius: '5px',
+              width: '2px',
+              flexGrow: 1,
+              transform: `scaleY(${level})`,
+            }}
+          />
+        ))}
+        {levels2.map((level, index) => (
+          <div
+            key={index}
+            className="mobileScrubber"
+            style={{
+              backgroundColor: index <= Math.floor(wordIndexMobile * (numBarsMobile / words.length)) ? '#474747' : '#c3c3c3',
+              borderRadius: '5px',
+              width: '2px',
+              flexGrow: 1,
+              transform: `scaleY(${level})`,
+              // transition: 'background-color 0.1s ease-in-out, transform 0.1s ease-in-out'
+            }}
+          />
+        ))}
+      </div>
+
+    {/* <div className="mobileScrubber" ref={containerRef} style={{ width: "95%", marginRight: 'auto', marginLeft: 'auto', display: 'flex', height: '50px', gap: '2px', position: 'relative', userSelect: 'none' }}
+        onMouseDown={handleMouseDown}>
+        {levels2.map((level, index) => (
+          <div
+            key={index}
+            style={{
+              backgroundColor: index <= Math.floor(wordIndex * (numBarsMobile / words.length)) ? 'black' : 'grey',
               borderRadius: '5px',
               width: '2px',
               flexGrow: 1,
@@ -84,13 +146,9 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
             }}
           />
         ))}
-        {/* <div style={{
-              backgroundColor: 'black',
-              borderRadius: '5px',
-              width: '1px',
-            }}/> */}
-      </div>
+      </div> */}
     </div>
+
   );
 }
 
