@@ -144,7 +144,7 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
             </div>
             <div onClick={handleImageClick}>
             {/* <TextScrubber text={text} /> */}
-            <AudioScrubber setCurrentTime={handleSetCurrentTime} audioRef={audioRef}  text={text} isMuted={isMuted}/>
+            <AudioScrubber setMuted={setIsMuted} setCurrentTime={handleSetCurrentTime} audioRef={audioRef}  text={text} isMuted={isMuted}/>
             </div>
 
             <audio ref={audioRef} src={audio_file}></audio>
