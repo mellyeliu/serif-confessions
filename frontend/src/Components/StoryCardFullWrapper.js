@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import StoryCard from './StoryCard';
+import { useData } from './DataContext';
+
 
 
 
@@ -13,7 +15,7 @@ import StoryCard from './StoryCard';
 const supabase = createClient("https://kovldxcnymhyquwknlln.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
 
 const StoryCardFullWrapper = () => {
-  const today = new Date()
+  const today = new Date();
 
   const [currentPrompt, setCurrentPrompt] = useState([]);
   const [confessions, setConfessions] = useState([]);

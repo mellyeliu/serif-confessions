@@ -3,6 +3,7 @@ import Dialog from './Dialog';
 import { BiSolidPencil } from "react-icons/bi";
 import { createClient } from "@supabase/supabase-js";
 import DatePicker from './DatePicker';
+import {useData} from './DataContext';
 
 const buttonStyle = {
   padding: '14px 0px',
@@ -18,20 +19,20 @@ const buttonStyle = {
 const supabase = createClient("https://kovldxcnymhyquwknlln.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
 
 const StoryHome = (props) => {
+  const { prompt, date, setDate, setConfessions, setPrompt, confessions } = useData();
   const today = new Date();
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-  const formattedDate = today.toLocaleDateString('en-US', options);
+  const currentDate = today.toLocaleDateString('en-US', options);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [currentDate, setCurrentDate] = useState(formattedDate);
 
   const changeDate = (days) => {
-    const newDate = new Date(currentDate);
+    const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + days);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const newFormattedDate = newDate.toLocaleDateString('en-US', options);
-    setCurrentDate(newFormattedDate);
+    setDate(newFormattedDate);
   };
 
   const handleOpenDialog = () => setIsDialogOpen(true);
@@ -44,7 +45,7 @@ const StoryHome = (props) => {
   return (
     <div style={{ margin: "30px 0px" }}>
       <div className="body-row single one">
-        <DatePicker today={formattedDate} date={currentDate} changeDate={changeDate}/>
+        <DatePicker today={currentDate} date={date} changeDate={changeDate}/>
         {/* <div style={{ color: "grey", float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
           <h4 style={{ marginBlockEnd: "0", }}>{formattedDate}</h4>
         </div> */}
