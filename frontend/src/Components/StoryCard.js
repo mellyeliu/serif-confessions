@@ -62,7 +62,6 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
         // backgroundSize: 'cover',
         background: '#fff', // White background
         width: full ? "50%" : "40%",
-        minHeight: full ? 500 : 400,
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 30,

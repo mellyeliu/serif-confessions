@@ -1,40 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 
-function getNumBars() {
-  const screenWidth = window.innerWidth;
-  console.log(screenWidth);
-  if (screenWidth > 1200) {
-
-    return 175;
-  } else if (screenWidth > 900) {
-
-    return 135;
-  } else if (screenWidth > 700) {
-
-    return 90;
-  } else if (screenWidth > 500) {
-
-    return 150;
-  } else {
-
-    return 55;
-  }
-}
-
-function setupListeners() {
-  window.addEventListener('resize', getNumBars);
-  window.addEventListener('unload', function() {
-    window.removeEventListener('resize', getNumBars);
-  });
-}
-
-// Apply styles on load and set up listeners
-document.addEventListener('DOMContentLoaded', function() {
-  getNumBars();
-  setupListeners();
-});
-
 function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
   const screenWidth = window.innerWidth;
   console.log(screenWidth);
@@ -55,7 +21,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
         const scrubberPosition = (currentTime / duration) * containerRef.current.clientWidth;
         setScrubberPosition(scrubberPosition);
         // setLevels(levels.map(() => Math.random()));
-      }, 100);
+      }, 50);
     }
     return () => clearInterval(interval);
   }, [isMuted]);
@@ -94,7 +60,9 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
     <p style={{ width: '100%', color: 'black', marginTop: 30, marginBottom: 30 }}>
         {words.map((word, index) => (
             <>
-                <span key={index} style={{ backgroundColor: index === wordIndex ? 'rgb(213 213 213)' : 'transparent' }}>
+                <span key={index} style={{
+                  // fontStyle: index === wordIndex ? 'italic' : 'normal',
+                  backgroundColor: index === wordIndex ? 'rgb(213 213 213)' : 'transparent' }}>
                     {word}
                 </span><span> </span>
             </>
