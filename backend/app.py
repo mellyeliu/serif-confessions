@@ -24,15 +24,17 @@ def async_generate_confession_assets(*args):
         print(f"Upload successful: {audiofile_name}")
     else:
         print(f"Upload for confession {response_id} failed")
-    print(f"Upload is successful? {'yes' if uploaded_audio_data.ok else 'no'}")
 
+"""
+Creates equivalent confession in database
+and generates audio transcriptions for the given text
+"""
 @app.route('/confessions', methods=['POST'])
 def create_confession():
     data = request.json
     # TODO: Validate data before adding to table
     response = supabase.table("confessions").insert(data).execute()
     # TODO: Validate that response is correct shape
-    # generate TTS 
     p = Process(target=async_generate_confession_assets, args=(response.data[0]['id'],data['text'],))
     p.start()
     return response.data
