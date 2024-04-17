@@ -30,7 +30,7 @@ function NavHeader() {
         {/* <img style={{ cursor: 'pointer' }} onClick={handleClick} src="/images/serif.png" /> */}
       </div>
       <div style={{ marginLeft: 'auto' }}>
-        <button onClick={handleClick} className="header-button" style={buttonStyle}>Feed</button> <button className="header-button" style={buttonStyle}>Contact</button>
+        <button onClick={handleClick} className="header-button" style={buttonStyle}>Feed</button> <button className="header-button" style={buttonStyle}>Learn more</button>
       </div>
     </div>
   );

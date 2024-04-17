@@ -57,7 +57,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
 
   return (
     <div>
-    <p style={{ width: '100%', color: 'black', marginTop: 30, marginBottom: 30 }}>
+    <p style={{ width: '100%', color: 'black', marginTop: 30, marginBottom: 30, lineHeight: 1.5 }}>
         {words.map((word, index) => (
             <>
                 <span key={index} style={{
