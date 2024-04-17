@@ -100,7 +100,7 @@ function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
             </>
         ))}
     </p>
-      <div ref={containerRef} style={{ width: "95%", marginRight: 'auto', marginLeft: 'auto', display: 'flex', height: '50px', gap: '2px', position: 'relative', userSelect: 'none' }}
+      <div ref={containerRef} style={{ width: "95%", marginRight: 'auto', marginLeft: 'auto', display: 'flex', height: '30px', gap: '2px', position: 'relative', userSelect: 'none' }}
         onMouseDown={handleMouseDown}>
         {levels.map((level, index) => (
           <div

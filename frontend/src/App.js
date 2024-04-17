@@ -66,7 +66,7 @@ function App() {
           <StoryHome prompt={currentPrompt ? currentPrompt.text : ""} />
           <Routes>
             <Route path="/" element={<StoryList confessions={confessions ?? []} />} />
-            <Route path="/card/:id" element={<StoryCardFullWrapper confessions={confessions ?? []} />} />
+            <Route path="/card/:id" element={<StoryCardFullWrapper />} />
           </Routes>
           {/* <StoryList confessions={confessions ?? []} /> */}
           <Footer />
