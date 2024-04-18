@@ -94,7 +94,7 @@ function Dialog({ isOpen, onClose, onSubmit }) {
                         {wordCount}/{maxWords} words
                     </div>
                 </div>
-                <button disabled={wordCount > maxWords} onClick={onSubmit} style={submitButtonStyle}>Post</button>
+                <button disabled={wordCount > maxWords} onClick={() => onSubmit(text)}  style={submitButtonStyle}>Post</button>
                 <div style={{ marginTop: 5, textAlign: 'center', fontSize: 11, color: 'grey' }}>You cannot edit this after posting</div>
             </div>
         </div>

@@ -16,14 +16,13 @@ import { DataProvider, useData } from './Components/DataContext';
 
 
 
-
-const supabase = createClient("https://kovldxcnymhyquwknlln.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
+const SUPABASE_URL = "https://kovldxcnymhyquwknlln.supabase.co"
+const supabase = createClient(SUPABASE_URL, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
 
 function AppData() {
   const today = new Date()
   const { prompt, date, setDate, setConfessions, setPrompt, confessions } = useData();
 
-//   const [currentPrompt, setCurrentPrompt] = useState([]);
   useEffect(() => {
     getCurrentPrompt();
   }, []);
@@ -41,15 +40,51 @@ function AppData() {
       .select('*')
       .eq('date', dateFilter);
 
-    setPrompt(prompts[0]);
+      if (error) {
+        console.error('Error fetching prompts:', error);
+      } else if (prompts.length > 0) {
+        setPrompt(prompts[0]);
+      }
   }
 
+  async function getImageUrls(confessionId) {
+    try {
+        const {data} = await supabase.storage.from('confessions-images').list(confessionId);
+        // Map over the images array to construct the full URLs
+        const imageUrls = data.filter(item => item.metadata.mimetype === "image/png").map(image => {
+            return `${SUPABASE_URL}/storage/v1/object/public/confessions-images/${confessionId}/${image.name}`
+        });
+        return imageUrls;
+    } catch (error) {
+        console.error('Failed to fetch images:', error);
+        return [];
+    }
+}
+
   async function getCurrentConfessions() {
-    const { data } = await supabase
-      .from("confessions")
-      .select('*')
-      .eq('prompt_id', prompt.id);
-    setConfessions(data);
+    try {
+      const { data: confessionsData, error } = await supabase
+        .from("confessions")
+        .select('*')
+        .eq('prompt_id', prompt.id);
+
+      if (error) {
+        throw error;
+      }
+      // Array to hold confessions with their images
+      const confessionsWithImages = [];
+
+      // Loop through each confession to fetch its associated image
+      for (const confession of confessionsData) {
+          confessionsWithImages.push({ ...confession, image_urls: await getImageUrls(confession.id) });  // Add confession without image on error
+      }
+
+      // Update state or handle the combined data
+      console.log(confessionsWithImages)
+      setConfessions(confessionsWithImages);
+    } catch (fetchError) {
+      console.error('Error fetching confessions:', fetchError);
+    }
   }
 
   return (
@@ -65,7 +100,7 @@ function AppData() {
           <div className="">
           <NavHeader />
           </div>
-          <StoryHome prompt={prompt ? prompt.text : ""} />
+          <StoryHome prompt={prompt} />
           <Routes>
             <Route path="/" element={<StoryList confessions={confessions ?? []} />} />
             <Route path="/card/:id" element={<StoryCardFullWrapper />} />

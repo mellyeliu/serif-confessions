@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import AppData from './AppData';
-import { DataProvider, useData } from './Components/DataContext';
+import { DataProvider } from './Components/DataContext';
 
 function App() {
   return (

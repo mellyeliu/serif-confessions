@@ -3,7 +3,6 @@ import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 
 function AudioScrubber({text, isMuted, setCurrentTime, audioRef}) {
   const screenWidth = window.innerWidth;
-  console.log(screenWidth);
   const words = text.split(" ");
   const numBars = 150;
   const numBarsMobile = 75;
