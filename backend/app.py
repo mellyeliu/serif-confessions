@@ -4,7 +4,7 @@ from supabase import create_client, Client
 from multiprocessing import Process
 from src.tts import XTTS
 from flask_cors import CORS
-import logging
+from src.stable_diffusion import synthesize_images
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -13,20 +13,37 @@ SUPABASE_PROJECT_URL: str = os.getenv('SUPABASE_PROJECT_URL')
 SUPABASE_API_KEY: str = os.getenv('SUPABASE_API_KEY')
 supabase: Client = create_client(SUPABASE_PROJECT_URL, SUPABASE_API_KEY)
 tts = XTTS()
-def async_generate_confession_assets(*args):
+def async_generate_confession_audio(*args):
     response_id = args[0]
     text = args[1]
     print(f"Starting TTS generation for confession {response_id}")
     
     audiofile_name = f"c_{response_id}.wav"
-    outfile = f"/tmp/{audiofile_name}"
-    tts.synthesize(text, "en", outfile=outfile)
-    uploaded_audio_data = supabase.storage.from_('confessions-audio').upload(audiofile_name, outfile)
+    out_audiofile = f"/tmp/{audiofile_name}"
+    tts.synthesize(text, "en", outfile=out_audiofile)
+    uploaded_audio_data = supabase.storage.from_('confessions-audio').upload(audiofile_name, out_audiofile)
     if uploaded_audio_data.status_code == 200:
         print(f"Upload successful: {audiofile_name}")
+        public_url = f"{SUPABASE_PROJECT_URL}/storage/v1/object/public/{uploaded_audio_data.json()['Key']}"
+        # Update audio_url on confession with public url to mark upload as complete
+        supabase.table("confessions").update({"audio_url": public_url}).eq("id", response_id).execute()
     else:
         print(f"Upload for confession {response_id} failed")
 
+def async_generate_confession_images(*args):
+    response_id = args[0]
+    text = args[1]
+    print(f"Starting image generation for confession {response_id}")
+    out_imagefolder = f"/tmp"
+    prompt = f"{text} in the style of a detailed pencil sketch"
+    image_files = synthesize_images(prompt, out_imagefolder, response_id)
+    
+    for image_file in image_files:
+        file_path = f"/{response_id}/{os.path.basename(image_file)}"
+        uploaded_video_data = supabase.storage.from_('confessions-images').upload(file_path, image_file)
+        print(uploaded_video_data.json())
+        print(f"Upload successful: {file_path}")
+    
 """
 Creates equivalent confession in database
 and generates audio transcriptions for the given text
@@ -40,8 +57,10 @@ def create_confession():
     # TODO: Validate data before adding to table
     table_result = supabase.table("confessions").insert(data).execute()
     # TODO: Validate that response is correct shape
-    p = Process(target=async_generate_confession_assets, args=(table_result.data[0]['id'],data['text'],))
-    p.start()
+    p1 = Process(target=async_generate_confession_audio, args=(table_result.data[0]['id'], data['text'],))
+    p2 = Process(target=async_generate_confession_images, args=(table_result.data[0]['id'], data['text'],))
+    p1.start()
+    p2.start()
     response = jsonify(table_result.data)
     return response
 

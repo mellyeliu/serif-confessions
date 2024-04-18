@@ -37,8 +37,27 @@ const StoryHome = (props) => {
 
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
-  const handleSubmit = () => {
-    console.log('Submit your story...');
+  const handleSubmit = (text) => {
+    fetch('http://127.0.0.1:5000/confessions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+            prompt_id: props.prompt.id,
+            text: text,
+            user_id: null
+        })
+    })
+    .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
     handleCloseDialog();
   };
 
@@ -52,7 +71,7 @@ const StoryHome = (props) => {
       </div>
       <div className="body-row single one">
         <div className="mobileFull" style={{ cursor: 'default', marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '40%', alignItems: 'center' }}>
-          <h2>{props.prompt}</h2>
+          <h2>{props.prompt ? props.prompt.text : ""}</h2>
         </div>
       </div>
       <button className="animated-button" onClick={handleOpenDialog} style={buttonStyle}><BiSolidPencil /> Share your story</button>

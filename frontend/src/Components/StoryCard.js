@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
 import '../PageLayout.css';
 import TextScrubber from './TextScrubber';
@@ -8,10 +8,17 @@ import { useNavigate } from 'react-router-dom';
 import AudioScrubber from './AudioScrubber';
 
 
-function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
+function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full }) {
     const navigate = useNavigate();
     const [isMuted, setIsMuted] = React.useState(true);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        if (audioRef.current && audio_url) {
+          audioRef.current.src = audio_url;
+          audioRef.current.load();
+        }
+      }, [audio_url]);
 
     const handleMouseDown = (e) => {
         setDragStart({
@@ -25,7 +32,8 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
     // Play audio when mouse enters the element
     const handleMouseEnter = () => {
         setIsMuted(false);
-        if (audioRef.current) {
+        if (audioRef.current.src) {
+            console.log(audioRef.current.src)
             audioRef.current.play();
         }
     };
@@ -33,13 +41,13 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
     // Pause audio when mouse leaves the element
     const handleMouseLeave = () => {
         setIsMuted(true);
-        if (audioRef.current) {
+        if (audioRef.current.src) {
             audioRef.current.pause();
         }
     };
 
     const handleSetCurrentTime = (time) => {
-    if (audioRef.current) {
+    if (audioRef.current.src) {
         audioRef.current.currentTime = time;
     }
     };
@@ -111,16 +119,16 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
     // };
 
     const desktopItems = {
-        a: { top: 13, left: 5, url: '/images/bg1.jpg', angle: -7 },
-        b: { top: 0, left: 20, url: '/images/bg1.jpg', angle: 4 },
-        c: { top: 21, left: 45, url: '/images/bg1.jpg', angle: -3 },
-        d: { top: 7, left: 60, url: '/images/bg1.jpg', angle: 10 },
-        e: { top: 13, left: 75, url: '/images/bg1.jpg', angle: 4 },
+        a: { top: 13, left: 5, url: image_urls.length > 1 ? image_urls[0] : '/images/bg1.jpg', angle: -7 },
+        b: { top: 0, left: 20, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 4 },
+        c: { top: 21, left: 45, url: image_urls.length > 3 ? image_urls[2] : '/images/bg1.jpg', angle: -3 },
+        d: { top: 7, left: 60, url: image_urls.length > 4 ? image_urls[3] : '/images/bg1.jpg', angle: 10 },
+        e: { top: 13, left: 75, url: image_urls.length >= 5 ? image_urls[4] : '/images/bg1.jpg', angle: 4 },
     };
 
     const mobileItems = {
-        a: { top: -10, left: 0, url: '/images/bg1.jpg', angle: -7 },
-        b: { top: -5, left: 35, url: '/images/bg1.jpg', angle: 4 },
+        a: { top: -10, left: 0, url: image_urls.length > 1 ? image_urls[0] : '/images/bg1.jpg', angle: -7 },
+        b: { top: -5, left: 35, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 4 },
     };
 
     const date = new Date(created_at);
@@ -146,7 +154,7 @@ function StoryCard({ created_at, text, user_id, audio_file, id, full }) {
             <AudioScrubber setMuted={setIsMuted} setCurrentTime={handleSetCurrentTime} audioRef={audioRef}  text={text} isMuted={isMuted}/>
             </div>
 
-            <audio ref={audioRef} src={audio_file}></audio>
+            <audio ref={audioRef}></audio>
         </div>
     );
 }
