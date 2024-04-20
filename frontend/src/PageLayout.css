@@ -20,6 +20,30 @@
   padding-bottom: 50px;
 }
 
+.floating {
+  transition: transform 0.2s ease-in-out !important;
+}
+
+.StoryCard:hover .floating {
+  animation: floatDrift 10s infinite linear !important;
+}
+
+@keyframes floatDrift {
+  0%, 100% {
+    transform: translate(0px, 0px);
+    animation-timing-function: ease-out;
+  }
+  25% {
+    transform: translate(-10px, -20px);
+  }
+  50% {
+    transform: translate(20px, 15px);
+  }
+  75% {
+    transform: translate(-15px, 10px);
+  }
+}
+
 .no-select {
   -webkit-user-select: none;  /* Safari */
   -moz-user-select: none;     /* Firefox */

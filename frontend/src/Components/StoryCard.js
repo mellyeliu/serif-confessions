@@ -69,7 +69,7 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
         // backgroundImage: 'url(/images/paper.jpg)',
         // backgroundSize: 'cover',
         background: '#fff', // White background
-        width: full ? "50%" : "40%",
+        width: full ? "50%" : "45%",
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 30,
