@@ -29,12 +29,6 @@ function AppData() {
     })
   }, []);
 
-  // useEffect(() => {
-  //   if (prompt && prompt.id) {
-  //     getCurrentConfessions();
-  //   }
-  // }, [prompt]);
-
   async function getCurrentPrompt() {
     let dateFilter = today.toISOString().split('T')[0];
     let { data: prompts, error } = await supabase
@@ -54,6 +48,7 @@ function AppData() {
     try {
         const {data} = await supabase.storage.from('confessions-images').list(confessionId);
         // Map over the images array to construct the full URLs
+        // Idk why sometimes the images upload as plain text instead of png, so we also just check that the file extension is png
         const imageUrls = data.filter(item => item.metadata.mimetype === "image/png" || item.name.endsWith('.png')).map(image => {
             return `${SUPABASE_URL}/storage/v1/object/public/confessions-images/${confessionId}/${image.name}`
         });
@@ -69,7 +64,8 @@ function AppData() {
       const { data: confessionsData, error } = await supabase
         .from("confessions")
         .select('*')
-        .eq('prompt_id', prompt.id);
+        .eq('prompt_id', prompt.id)
+        .order('id', { ascending: false });
 
       if (error) {
         throw error;

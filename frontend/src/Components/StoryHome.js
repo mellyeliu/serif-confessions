@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Dialog from './Dialog';
+import InitialInfoPopup from './InitialInfoPopup';
 import { BiSolidPencil } from "react-icons/bi";
-import { createClient } from "@supabase/supabase-js";
 import DatePicker from './DatePicker';
 import {useData} from './DataContext';
+
 import isDev from '../helper';
 const buttonStyle = {
   padding: '14px 0px',
@@ -16,16 +17,15 @@ const buttonStyle = {
   border: 'none'
 }
 
-const supabase = createClient("https://kovldxcnymhyquwknlln.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
-
 const StoryHome = (props) => {
-  const { prompt, date, setDate, setConfessions, setPrompt, confessions } = useData();
+  const { date, setDate } = useData();
   const today = new Date();
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
   const currentDate = today.toLocaleDateString('en-US', options);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isInitialPopupOpen, setIsInitialPopupOpen] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const changeDate = (days) => {
@@ -38,6 +38,7 @@ const StoryHome = (props) => {
 
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
+  const handleCloseInitialInfoPopup = () => setIsInitialPopupOpen(false);
   const handleSubmit = (text) => {
     setTimeout(() => setShowConfirmation(false), 3000);
     const endpoint = isDev ? "http://127.0.0.1:5000/confessions" : "https://serif-confessions-aa78f08a8671.herokuapp.com/"
@@ -79,6 +80,10 @@ const StoryHome = (props) => {
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         onSubmit={handleSubmit}
+      />
+      <InitialInfoPopup
+        isOpen={isInitialPopupOpen}
+        onClose={handleCloseInitialInfoPopup}
       />
     </div>
   );
