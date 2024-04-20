@@ -41,8 +41,10 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
     // Pause audio when mouse leaves the element
     const handleMouseLeave = () => {
         setIsMuted(true);
-        if (audioRef.current.src) {
-            audioRef.current.pause();
+        if (audioRef.current.readyState > 0) {
+            if (audioRef.current.src) {
+                audioRef.current.pause();
+            }
         }
     };
 
