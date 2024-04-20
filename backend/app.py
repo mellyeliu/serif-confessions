@@ -10,8 +10,8 @@ from src.stable_diffusion import synthesize_images
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-# CORS(app, resources={r"/*": {"origins": ["*.serif-confessions.netlify.app/", "http.127.0.0.1"]}})
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": ["*.serif-confessions.netlify.app/", "*serif.app/*"]}})
+# CORS(app, resources={r"/*": {"origins": "*"}})
 SUPABASE_PROJECT_URL: str = os.getenv('SUPABASE_PROJECT_URL')
 SUPABASE_API_KEY: str = os.getenv('SUPABASE_API_KEY')
 USE_LOCAL_MODELS: bool = os.getenv('USE_LOCAL_MODELS')
