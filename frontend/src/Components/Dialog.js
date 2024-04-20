@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function Dialog({ isOpen, onClose, onSubmit }) {
+function Dialog({ isOpen, onClose, onSubmit, canSubmit }) {
     const [text, setText] = useState('');
     const [isConfirmation, setIsConfirmation] = useState(false);
     const dialogRef = useRef(null);
@@ -95,8 +95,8 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         padding: '13px 0px',
         width: 200,
         borderRadius: 20,
-        background: isOverLimit ? 'grey' : 'black',
-        cursor: isOverLimit ? 'not-allowed' : 'pointer',
+        background: (isOverLimit || !canSubmit) ? 'grey' : 'black',
+        cursor: (isOverLimit || !canSubmit) ? 'not-allowed' : 'pointer',
         color: 'white',
         margin: '10px 0px',
         border: 'none'
@@ -111,16 +111,17 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         <div style={overlayStyle} onClick={onClose}>
            {!isConfirmation ? (<div className="mobileSemiFull" style={dialogStyle} onClick={handleOverlayClick}>
                 <h3>Visualize your story</h3>
+                {!canSubmit && (<div style={{ marginTop: 5, textAlign: 'center', fontSize: 11, color: 'red' }}>You can only submit one confession a day. Check out other confessions and come back tomorrow for a new prompt!</div>)}
                 <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto' }}>
                     <textarea type="text" value={text} onChange={handleChange} style={inputStyle} />
                     <div style={{ fontSize: 11, position: 'absolute', bottom: '22px', right: '0px', color: wordCountColor }}>
                         {wordCount}/{maxWords} words
                     </div>
                 </div>
-                <button disabled={wordCount > maxWords} onClick={() => handleLocalSubmit(text)}  style={submitButtonStyle}>Post</button>
+                <button disabled={wordCount > maxWords || !canSubmit} onClick={() => handleLocalSubmit(text)}  style={submitButtonStyle}>Post</button>
                 <div style={{ marginTop: 5, textAlign: 'center', fontSize: 11, color: 'grey' }}>You cannot edit this after posting</div>
             </div>) :
-            (<div className="mobileSemiFull" style={dialogStyle} ref={dialogRef}>
+            (<div className="mobileSemiFull" style={dialogStyle} disabled={!canSubmit} ref={dialogRef}>
             <h3>Thanks for your confession.</h3>
                 <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto', padding: 15, fontFamily: "Sedan"}}>
                     Your confession is being sent out. It will soon be released into the world.

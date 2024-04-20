@@ -12,7 +12,7 @@ import { createClient } from "@supabase/supabase-js";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { DataProvider, useData } from './Components/DataContext';
-
+import { generateCookie, getCookie } from './helper';
 
 
 const SUPABASE_URL = "https://kovldxcnymhyquwknlln.supabase.co"
@@ -20,15 +20,31 @@ const supabase = createClient(SUPABASE_URL, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ
 
 function AppData() {
   const today = new Date()
-  const { prompt, date, setDate, setConfessions, setPrompt, confessions } = useData();
+  const { prompt, date, setDate, setConfessions, setPrompt, confessions, visitorId, setVisitorId, setHasSubmittedToday } = useData();
 
+  
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     getCurrentPrompt().then((prompt) => {
       getCurrentConfessions(prompt);
     })
+
+    let currentVisitorId = getCookie("serif-unique-visitor-id")
+    if (currentVisitorId == "") {
+      currentVisitorId = generateCookie("serif-unique-visitor-id")
+    }
+    setVisitorId(currentVisitorId)
+    // checkUserSubmission(currentVisitorId)
   }, []);
 
+  // async function checkUserSubmission(visitorId) {
+  //   let { data, error } = await supabase
+  //     .from('confessions')
+  //     .select('user_id')
+  //     .eq('user_id', visitorId);
+  //   console.log(data)
+  // }
   async function getCurrentPrompt() {
     let dateFilter = today.toISOString().split('T')[0];
     let { data: prompts, error } = await supabase

@@ -5,7 +5,7 @@ import { BiSolidPencil } from "react-icons/bi";
 import DatePicker from './DatePicker';
 import {useData} from './DataContext';
 
-import isDev from '../helper';
+import {isDev} from '../helper';
 const buttonStyle = {
   padding: '14px 0px',
   width: 200,
@@ -18,7 +18,7 @@ const buttonStyle = {
 }
 
 const StoryHome = (props) => {
-  const { date, setDate } = useData();
+  const { date, setDate, visitorId } = useData();
   const today = new Date();
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -27,6 +27,7 @@ const StoryHome = (props) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isInitialPopupOpen, setIsInitialPopupOpen] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(true);
 
   const changeDate = (days) => {
     const newDate = new Date(date);
@@ -50,7 +51,7 @@ const StoryHome = (props) => {
         body: JSON.stringify({
             prompt_id: props.prompt.id,
             text: text,
-            user_id: null
+            user_id: visitorId
         })
     })
     .then(response => {
@@ -80,6 +81,7 @@ const StoryHome = (props) => {
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         onSubmit={handleSubmit}
+        canSubmit={canSubmit}
       />
       <InitialInfoPopup
         isOpen={isInitialPopupOpen}
