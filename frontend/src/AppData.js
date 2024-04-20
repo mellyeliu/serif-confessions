@@ -54,7 +54,7 @@ function AppData() {
     try {
         const {data} = await supabase.storage.from('confessions-images').list(confessionId);
         // Map over the images array to construct the full URLs
-        const imageUrls = data.filter(item => item.metadata.mimetype === "image/png").map(image => {
+        const imageUrls = data.filter(item => item.metadata.mimetype === "image/png" || item.name.endsWith('.png')).map(image => {
             return `${SUPABASE_URL}/storage/v1/object/public/confessions-images/${confessionId}/${image.name}`
         });
         return imageUrls;

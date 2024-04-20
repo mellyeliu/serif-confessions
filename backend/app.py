@@ -56,7 +56,9 @@ def async_generate_confession_images(*args):
         im_file = image_file
         if USE_LOCAL_MODELS:
             im_file = "src/data/puppy.png"
-        uploaded_video_data = supabase.storage.from_('confessions-images').upload(file_path, im_file)
+        uploaded_video_data = supabase.storage.from_('confessions-images').upload(file_path, im_file, {
+            "contentType": "image/png",
+        })
         print(uploaded_video_data.json())
         print(f"Upload successful: {file_path}")
     

@@ -129,11 +129,11 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
     const mobileItems = {
         a: { top: -10, left: -10, url: image_urls.length > 1 ? image_urls[0] : '/images/bg1.jpg', angle: -7 },
         b: { top: -5, left: 35, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 4 },
-        c: { top: -5, left: 54, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 8 },
+        c: { top: -5, left: 54, url: image_urls.length >= 3 ? image_urls[2] : '/images/bg1.jpg', angle: 8 },
     };
 
     const date = new Date(created_at);
-
+    
     const relativeTime = formatDistanceToNow(date, { addSuffix: true });
     return (
         <div className={'StoryCard mobile75Full'} style={cardStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
