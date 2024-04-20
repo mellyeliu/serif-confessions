@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
-const DraggableImage = ({ url, initialLeft, initialTop, currentZ, setCurrentZ, angle }) => {
+const DraggableImage = ({ url, initialLeft, initialTop, angle }) => {
     const [position, setPosition] = useState({ left: initialLeft, top: initialTop });
     const [isDragging, setIsDragging] = useState(false);
+    const [currentZ, setCurrentZ] = useState(1);
 
     const onMouseDown = (e) => {
         setIsDragging(true);
-        setCurrentZ(currentZ + 1); // bring current image to front
+        setCurrentZ(currentZ + 2); // bring current image to front
         e.preventDefault();
     };
 

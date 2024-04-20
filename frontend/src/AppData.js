@@ -90,12 +90,12 @@ function AppData() {
   return (
     <Router>
       <DataProvider>
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1.5 }}
-      >
+      > */}
       <div className="App">
           <div className="">
           <NavHeader />
@@ -108,7 +108,7 @@ function AppData() {
           {/* <StoryList confessions={confessions ?? []} /> */}
           <Footer />
         </div>
-      </motion.div>
+      {/* </motion.div> */}
       </DataProvider>
     </Router>
   );

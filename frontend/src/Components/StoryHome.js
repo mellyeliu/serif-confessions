@@ -26,6 +26,7 @@ const StoryHome = (props) => {
   const currentDate = today.toLocaleDateString('en-US', options);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const changeDate = (days) => {
     const newDate = new Date(date);
@@ -38,6 +39,7 @@ const StoryHome = (props) => {
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
   const handleSubmit = (text) => {
+    setTimeout(() => setShowConfirmation(false), 3000);
     fetch('http://127.0.0.1:5000/confessions', {
         method: 'POST',
         headers: {
@@ -52,7 +54,7 @@ const StoryHome = (props) => {
     .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
-      }
+      } else {}
       return response.json();
     })
     .then(data => {
@@ -75,6 +77,7 @@ const StoryHome = (props) => {
         </div>
       </div>
       <button className="animated-button" onClick={handleOpenDialog} style={buttonStyle}><BiSolidPencil /> Share your story</button>
+      {/* {showConfirmation && <div className="confirmation">Your confession has been recorded. Thank you for releasing it into the world.</div>} */}
       <Dialog
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}

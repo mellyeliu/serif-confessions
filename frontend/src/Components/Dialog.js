@@ -1,7 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 function Dialog({ isOpen, onClose, onSubmit }) {
     const [text, setText] = useState('');
+    const [isConfirmation, setIsConfirmation] = useState(false);
+    const dialogRef = useRef(null);
+    const handleOverlayClick2 = (event) => {
+        if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+          setIsConfirmation(false);
+          onClose();
+        }
+      };
+
+    useEffect(() => {
+    document.addEventListener('mousedown', handleOverlayClick2);
+
+    return () => {
+        document.removeEventListener('mousedown', handleOverlayClick2);
+    };
+    }, []);
+
     if (!isOpen) {
         return null;
     };
@@ -30,6 +47,17 @@ function Dialog({ isOpen, onClose, onSubmit }) {
     const isOverLimit = wordCount > maxWords;
 
     const wordCountColor = wordCount > maxWords ? 'red' : 'rgb(150,150,150)';
+
+    const handleLocalSubmit = (text) => {
+        setIsConfirmation(true);
+        onSubmit(text);
+        // onClose();
+    }
+
+    const handleConfirmSubmit = () => {
+        setIsConfirmation(false);
+        // onClose();
+    }
 
     const overlayStyle = {
         position: 'fixed',
@@ -81,11 +109,9 @@ function Dialog({ isOpen, onClose, onSubmit }) {
         cursor: 'pointer',
     };
 
-
-
     return (
         <div style={overlayStyle} onClick={onClose}>
-            <div className="mobileSemiFull" style={dialogStyle} onClick={handleOverlayClick}>
+           {!isConfirmation ? <div className="mobileSemiFull" style={dialogStyle} onClick={handleOverlayClick}>
                 {/* <div style={closeButtonStyle} onClick={onClose}>X</div> */}
                 <h3>Visualize your story</h3>
                 <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -94,9 +120,16 @@ function Dialog({ isOpen, onClose, onSubmit }) {
                         {wordCount}/{maxWords} words
                     </div>
                 </div>
-                <button disabled={wordCount > maxWords} onClick={() => onSubmit(text)}  style={submitButtonStyle}>Post</button>
+                <button disabled={wordCount > maxWords} onClick={() => handleLocalSubmit(text)}  style={submitButtonStyle}>Post</button>
                 <div style={{ marginTop: 5, textAlign: 'center', fontSize: 11, color: 'grey' }}>You cannot edit this after posting</div>
-            </div>
+            </div> :
+            <div className="mobileSemiFull" style={dialogStyle} ref={dialogRef}>
+            <h3>Thanks for your confession.</h3>
+                <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto', padding: 15, fontFamily: "Sedan"}}>
+                    Your confession is being sent out. It will soon be released into the world.
+                </div>
+                <button disabled={wordCount > maxWords} onClick={() => handleConfirmSubmit()}  style={submitButtonStyle}>Close</button>
+            </div> }
         </div>
     );
 }

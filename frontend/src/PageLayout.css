@@ -35,6 +35,16 @@
   transform: scale(1.015);
 }
 
+.confirmation {
+  color: green;
+  opacity: 1;
+  transition: opacity 3s ease-out;
+}
+
+.confirmation.fade-out {
+  opacity: 0;
+}
+
 .scrubber {
   -webkit-appearance: none;
   width: 80%;
