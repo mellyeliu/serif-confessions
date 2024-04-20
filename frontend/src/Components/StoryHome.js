@@ -40,7 +40,7 @@ const StoryHome = (props) => {
   const handleCloseDialog = () => setIsDialogOpen(false);
   const handleSubmit = (text) => {
     setTimeout(() => setShowConfirmation(false), 3000);
-    fetch('http://127.0.0.1:5000/confessions', {
+    fetch('https://serif-confessions-aa78f08a8671.herokuapp.com/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -67,9 +67,6 @@ const StoryHome = (props) => {
     <div style={{ margin: "30px 0px" }}>
       <div className="body-row single one">
         <DatePicker today={currentDate} date={date} changeDate={changeDate}/>
-        {/* <div style={{ color: "grey", float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '50%', alignItems: 'center' }}>
-          <h4 style={{ marginBlockEnd: "0", }}>{formattedDate}</h4>
-        </div> */}
       </div>
       <div className="body-row single one">
         <div className="mobileFull" style={{ cursor: 'default', marginTop: 15, float: 'center', marginRight: 'auto', marginLeft: 'auto', width: '40%', alignItems: 'center' }}>
