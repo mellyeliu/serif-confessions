@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import os
+import supabase
 from supabase import create_client, Client
 from multiprocessing import Process
 from src.tts import XTTS
@@ -20,7 +21,7 @@ def async_generate_confession_audio(*args):
     
     audiofile_name = f"c_{response_id}.wav"
     out_audiofile = f"/tmp/{audiofile_name}"
-    tts.synthesize(text, "en", outfile=out_audiofile)
+    tts.synthesize(text, "en", outpath=out_audiofile)
     uploaded_audio_data = supabase.storage.from_('confessions-audio').upload(audiofile_name, out_audiofile)
     if uploaded_audio_data.status_code == 200:
         print(f"Upload successful: {audiofile_name}")
