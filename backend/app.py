@@ -4,16 +4,22 @@ import supabase
 from supabase import create_client, Client
 from multiprocessing import Process
 from src.tts import XTTS
+from src.local_tts import LocalXTTS
 from flask_cors import CORS
 from src.stable_diffusion import synthesize_images
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": ["*.serif-confessions.netlify.app/", "127.0.0.1"]}})
 
 SUPABASE_PROJECT_URL: str = os.getenv('SUPABASE_PROJECT_URL')
 SUPABASE_API_KEY: str = os.getenv('SUPABASE_API_KEY')
+USE_LOCAL_MODELS: bool = os.getenv('USE_LOCAL_MODELS')
 supabase: Client = create_client(SUPABASE_PROJECT_URL, SUPABASE_API_KEY)
-tts = XTTS()
+if USE_LOCAL_MODELS:
+    tts = LocalXTTS()
+else:
+    tts = XTTS()
+
 def async_generate_confession_audio(*args):
     response_id = args[0]
     text = args[1]
@@ -37,7 +43,10 @@ def async_generate_confession_images(*args):
     print(f"Starting image generation for confession {response_id}")
     out_imagefolder = f"/tmp"
     prompt = f"{text} in the style of a detailed pencil sketch"
-    image_files = synthesize_images(prompt, out_imagefolder, response_id)
+    if USE_LOCAL_MODELS:
+        image_files = ["src/data/puppy.png"] * 5;
+    else:
+        image_files = synthesize_images(prompt, out_imagefolder, response_id)
     
     for image_file in image_files:
         file_path = f"/{response_id}/{os.path.basename(image_file)}"

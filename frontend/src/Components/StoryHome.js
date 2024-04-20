@@ -4,7 +4,7 @@ import { BiSolidPencil } from "react-icons/bi";
 import { createClient } from "@supabase/supabase-js";
 import DatePicker from './DatePicker';
 import {useData} from './DataContext';
-
+import isDev from './helper';
 const buttonStyle = {
   padding: '14px 0px',
   width: 200,
@@ -40,7 +40,8 @@ const StoryHome = (props) => {
   const handleCloseDialog = () => setIsDialogOpen(false);
   const handleSubmit = (text) => {
     setTimeout(() => setShowConfirmation(false), 3000);
-    fetch('https://serif-confessions-aa78f08a8671.herokuapp.com/', {
+    const endpoint = isDev ? "http://127.0.0.1:5000/confessions" : "https://serif-confessions-aa78f08a8671.herokuapp.com/"
+    fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
