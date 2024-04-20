@@ -8,5 +8,5 @@ class LocalXTTS:
         # Initialize the TTS model with GPU support based on system availability
         self.tts = TTS(MODEL_ID, gpu=torch.cuda.is_available())
     
-    def synthesize(self, text: str, lang: str, outfile: str):
-        self.tts.tts_to_file(text=text, speaker_wav=SPEAKER_WAV, language=lang, file_path=outfile)
+    def synthesize(self, text: str, lang: str, outpath: str):
+        self.tts.tts_to_file(text=text, speaker_wav=SPEAKER_WAV, language=lang, file_path=outpath)

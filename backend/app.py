@@ -9,8 +9,9 @@ from flask_cors import CORS
 from src.stable_diffusion import synthesize_images
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
-CORS(app, resources={r"/*": {"origins": ["*.serif-confessions.netlify.app/", "127.0.0.1"]}})
 
+# CORS(app, resources={r"/*": {"origins": ["*.serif-confessions.netlify.app/", "http.127.0.0.1"]}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 SUPABASE_PROJECT_URL: str = os.getenv('SUPABASE_PROJECT_URL')
 SUPABASE_API_KEY: str = os.getenv('SUPABASE_API_KEY')
 USE_LOCAL_MODELS: bool = os.getenv('USE_LOCAL_MODELS')
@@ -44,13 +45,18 @@ def async_generate_confession_images(*args):
     out_imagefolder = f"/tmp"
     prompt = f"{text} in the style of a detailed pencil sketch"
     if USE_LOCAL_MODELS:
-        image_files = ["src/data/puppy.png"] * 5;
+        image_files = []
+        for i in range(5):
+            image_files.append(f"src/data/puppy_{i}.png")
     else:
         image_files = synthesize_images(prompt, out_imagefolder, response_id)
     
     for image_file in image_files:
         file_path = f"/{response_id}/{os.path.basename(image_file)}"
-        uploaded_video_data = supabase.storage.from_('confessions-images').upload(file_path, image_file)
+        im_file = image_file
+        if USE_LOCAL_MODELS:
+            im_file = "src/data/puppy.png"
+        uploaded_video_data = supabase.storage.from_('confessions-images').upload(file_path, im_file)
         print(uploaded_video_data.json())
         print(f"Upload successful: {file_path}")
     

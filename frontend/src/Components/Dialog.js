@@ -51,12 +51,10 @@ function Dialog({ isOpen, onClose, onSubmit }) {
     const handleLocalSubmit = (text) => {
         setIsConfirmation(true);
         onSubmit(text);
-        // onClose();
     }
 
     const handleConfirmSubmit = () => {
         setIsConfirmation(false);
-        // onClose();
     }
 
     const overlayStyle = {
@@ -111,8 +109,7 @@ function Dialog({ isOpen, onClose, onSubmit }) {
 
     return (
         <div style={overlayStyle} onClick={onClose}>
-           {!isConfirmation ? <div className="mobileSemiFull" style={dialogStyle} onClick={handleOverlayClick}>
-                {/* <div style={closeButtonStyle} onClick={onClose}>X</div> */}
+           {!isConfirmation ? (<div className="mobileSemiFull" style={dialogStyle} onClick={handleOverlayClick}>
                 <h3>Visualize your story</h3>
                 <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto' }}>
                     <textarea type="text" value={text} onChange={handleChange} style={inputStyle} />
@@ -122,14 +119,17 @@ function Dialog({ isOpen, onClose, onSubmit }) {
                 </div>
                 <button disabled={wordCount > maxWords} onClick={() => handleLocalSubmit(text)}  style={submitButtonStyle}>Post</button>
                 <div style={{ marginTop: 5, textAlign: 'center', fontSize: 11, color: 'grey' }}>You cannot edit this after posting</div>
-            </div> :
-            <div className="mobileSemiFull" style={dialogStyle} ref={dialogRef}>
+            </div>) :
+            (<div className="mobileSemiFull" style={dialogStyle} ref={dialogRef}>
             <h3>Thanks for your confession.</h3>
                 <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto', padding: 15, fontFamily: "Sedan"}}>
                     Your confession is being sent out. It will soon be released into the world.
                 </div>
+                <div style={{ position: 'relative', width: '85%', marginLeft: 'auto', marginRight: 'auto', padding: 15, fontFamily: "Sedan"}}>
+                    In the meantime, check out <a href="https://www.serif.app/" style={{textDecoration: null, color: 'inherit'}}>Serif: Tiktok meets Goodreads</a>, an immersive audiovisual reading experience.
+                </div>
                 <button disabled={wordCount > maxWords} onClick={() => handleConfirmSubmit()}  style={submitButtonStyle}>Close</button>
-            </div> }
+            </div>) }
         </div>
     );
 }

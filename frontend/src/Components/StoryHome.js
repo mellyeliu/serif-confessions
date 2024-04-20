@@ -4,7 +4,7 @@ import { BiSolidPencil } from "react-icons/bi";
 import { createClient } from "@supabase/supabase-js";
 import DatePicker from './DatePicker';
 import {useData} from './DataContext';
-import isDev from './helper';
+import isDev from '../helper';
 const buttonStyle = {
   padding: '14px 0px',
   width: 200,
@@ -61,7 +61,6 @@ const StoryHome = (props) => {
     .then(data => {
         console.log(data);
     })
-    handleCloseDialog();
   };
 
   return (

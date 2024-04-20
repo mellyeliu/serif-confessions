@@ -11,7 +11,6 @@ import Footer from './Components/Footer';
 import { createClient } from "@supabase/supabase-js";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { TestData } from './TestData';
 import { DataProvider, useData } from './Components/DataContext';
 
 
@@ -23,15 +22,18 @@ function AppData() {
   const today = new Date()
   const { prompt, date, setDate, setConfessions, setPrompt, confessions } = useData();
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getCurrentPrompt();
+    getCurrentPrompt().then((prompt) => {
+      getCurrentConfessions(prompt);
+    })
   }, []);
 
-  useEffect(() => {
-    if (prompt) {
-      getCurrentConfessions();
-    }
-  }, [prompt]);
+  // useEffect(() => {
+  //   if (prompt && prompt.id) {
+  //     getCurrentConfessions();
+  //   }
+  // }, [prompt]);
 
   async function getCurrentPrompt() {
     let dateFilter = today.toISOString().split('T')[0];
@@ -45,6 +47,7 @@ function AppData() {
       } else if (prompts.length > 0) {
         setPrompt(prompts[0]);
       }
+    return prompts[0]
   }
 
   async function getImageUrls(confessionId) {
@@ -61,7 +64,7 @@ function AppData() {
     }
 }
 
-  async function getCurrentConfessions() {
+  async function getCurrentConfessions(prompt) {
     try {
       const { data: confessionsData, error } = await supabase
         .from("confessions")
@@ -81,6 +84,7 @@ function AppData() {
 
       // Update state or handle the combined data
       setConfessions(confessionsWithImages);
+      setLoading(false);
     } catch (fetchError) {
       console.error('Error fetching confessions:', fetchError);
     }
@@ -100,11 +104,13 @@ function AppData() {
           <NavHeader />
           </div>
           <StoryHome prompt={prompt} />
-          <Routes>
+          {loading ? 
+          <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> :
+          (<Routes>
             <Route path="/" element={<StoryList confessions={confessions ?? []} />} />
             <Route path="/card/:id" element={<StoryCardFullWrapper />} />
-          </Routes>
-          {/* <StoryList confessions={confessions ?? []} /> */}
+          </Routes>)
+          }
           <Footer />
         </div>
       </motion.div>
