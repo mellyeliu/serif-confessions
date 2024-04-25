@@ -18,7 +18,7 @@ const buttonStyle = {
 }
 
 const StoryHome = (props) => {
-  const { date, setDate, visitorId } = useData();
+  const { date, setDate, visitorId, hasSubmittedToday } = useData();
   const today = new Date();
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -36,7 +36,6 @@ const StoryHome = (props) => {
     const newFormattedDate = newDate.toLocaleDateString('en-US', options);
     setDate(newFormattedDate);
   };
-
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
   const handleCloseInitialInfoPopup = () => setIsInitialPopupOpen(false);
@@ -81,7 +80,7 @@ const StoryHome = (props) => {
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         onSubmit={handleSubmit}
-        canSubmit={canSubmit}
+        canSubmit={hasSubmittedToday}
       />
       <InitialInfoPopup
         isOpen={isInitialPopupOpen}

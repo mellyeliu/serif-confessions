@@ -10,7 +10,6 @@ function Dialog({ isOpen, onClose, onSubmit, canSubmit }) {
           onClose();
         }
       };
-
     useEffect(() => {
     document.addEventListener('mousedown', handleOverlayClick2);
 

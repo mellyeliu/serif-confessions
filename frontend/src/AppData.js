@@ -19,38 +19,21 @@ const SUPABASE_URL = "https://kovldxcnymhyquwknlln.supabase.co"
 const supabase = createClient(SUPABASE_URL, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdmxkeGNueW1oeXF1d2tubGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNTUyNjgsImV4cCI6MjAyODczMTI2OH0.DH6euAm3PP4dFjKLCw2dWwA_A7hAzEzyw_LBfsM46x8");
 
 function AppData() {
-  const today = new Date()
   const { prompt, date, setDate, setConfessions, setPrompt, confessions, visitorId, setVisitorId, setHasSubmittedToday } = useData();
 
-  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getCurrentPrompt().then((prompt) => {
       getCurrentConfessions(prompt);
     })
+  }, [visitorId]);
 
-    let currentVisitorId = getCookie("serif-unique-visitor-id")
-    if (currentVisitorId == "") {
-      currentVisitorId = generateCookie("serif-unique-visitor-id")
-    }
-    setVisitorId(currentVisitorId)
-    // checkUserSubmission(currentVisitorId)
-  }, []);
-
-  // async function checkUserSubmission(visitorId) {
-  //   let { data, error } = await supabase
-  //     .from('confessions')
-  //     .select('user_id')
-  //     .eq('user_id', visitorId);
-  //   console.log(data)
-  // }
   async function getCurrentPrompt() {
-    let dateFilter = today.toISOString().split('T')[0];
     let { data: prompts, error } = await supabase
       .from('prompts')
       .select('*')
-      .eq('date', dateFilter);
+      .eq('date', date);
 
       if (error) {
         console.error('Error fetching prompts:', error);
@@ -82,10 +65,16 @@ function AppData() {
         .select('*')
         .eq('prompt_id', prompt.id)
         .order('id', { ascending: false });
-
+      // console.log(confessionsData)
+      const filtered = confessionsData.filter(confession => confession.user_id === visitorId);
+      if (filtered.length > 0) {
+        setHasSubmittedToday(true)
+      }
       if (error) {
         throw error;
       }
+
+      console.log(confessionsData)
       // Array to hold confessions with their images
       const confessionsWithImages = [];
 

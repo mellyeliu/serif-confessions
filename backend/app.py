@@ -3,10 +3,13 @@ import os
 import supabase
 from supabase import create_client, Client
 from multiprocessing import Process
-from src.tts import XTTS
-from src.local_tts import LocalXTTS
+from src.audio_generation.tts import XTTS
+from src.audio_generation.local_tts import LocalXTTS
 from flask_cors import CORS
-from src.stable_diffusion import synthesize_images
+from src.image_generation.stable_diffusion import StableDiffusionImageGenerator
+from src.image_generation.dalle import DalleImageGenerator
+from src.image_generation.local_puppies import PuppyImageGenerator
+
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -14,12 +17,22 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 CORS(app, resources={r"/*": {"origins": ["*"]}})
 SUPABASE_PROJECT_URL: str = os.getenv('SUPABASE_PROJECT_URL')
 SUPABASE_API_KEY: str = os.getenv('SUPABASE_API_KEY')
-USE_LOCAL_MODELS: bool = os.getenv('USE_LOCAL_MODELS')
+AUDIO_GENERATION_SRC: bool = os.getenv('AUDIO_GENERATION_SRC')
+IMAGE_GENERATION_SRC: str = os.getenv('IMAGE_GENERATION_SRC')
+
 supabase: Client = create_client(SUPABASE_PROJECT_URL, SUPABASE_API_KEY)
-if USE_LOCAL_MODELS:
+
+if AUDIO_GENERATION_SRC == "local":
     tts = LocalXTTS()
 else:
     tts = XTTS()
+
+if IMAGE_GENERATION_SRC == "openai":
+    image_generator = DalleImageGenerator()
+elif IMAGE_GENERATION_SRC == "stablediffusion":
+    image_generator = StableDiffusionImageGenerator()
+else:
+    image_generator = PuppyImageGenerator()
 
 def async_generate_confession_audio(*args):
     response_id = args[0]
@@ -44,18 +57,11 @@ def async_generate_confession_images(*args):
     print(f"Starting image generation for confession {response_id}")
     out_imagefolder = f"/tmp"
     prompt = f"{text} in the style of a detailed pencil sketch"
-    if USE_LOCAL_MODELS:
-        image_files = []
-        for i in range(5):
-            image_files.append(f"src/data/puppy_{i}.png")
-    else:
-        image_files = synthesize_images(prompt, out_imagefolder, response_id)
+    image_files = image_generator.synthesize(prompt, out_imagefolder, response_id)
     
     for image_file in image_files:
         file_path = f"/{response_id}/{os.path.basename(image_file)}"
         im_file = image_file
-        if USE_LOCAL_MODELS:
-            im_file = "src/data/puppy.png"
         uploaded_video_data = supabase.storage.from_('confessions-images').upload(file_path, im_file, {
             "contentType": "image/png",
         })
