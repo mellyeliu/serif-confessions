@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import AudioScrubber from './AudioScrubber';
 
 
-function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full }) {
+function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full, is_user_card }) {
     const navigate = useNavigate();
     const [isMuted, setIsMuted] = React.useState(true);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -61,7 +61,7 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
             navigate(`/card/${id}`);
         }
     };
-
+    // #F5F5DC
     const url = "/images/clouds.jpeg"
     const cardStyle = {
         borderRadius: '15px',
@@ -70,7 +70,7 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
         margin: '20px',
         // backgroundImage: 'url(/images/paper.jpg)',
         // backgroundSize: 'cover',
-        background: '#fff', // White background
+        background: !!!is_user_card ? "#fff": "#F5EBE0", // White background
         width: full ? "50%" : "45%",
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -80,7 +80,7 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
         cursor: 'pointer',
         paddingBottom: 30,
         position: 'relative',
-        background: 'white',
+        // background: 'white',
     }
 
     const timestampStyle = {
@@ -116,22 +116,18 @@ function StoryCard({ created_at, text, user_id, image_urls, audio_url, id, full 
         e.stopPropagation();
     }
 
-    // const handleClick = (id) => {
-    //     navigate(`/card/${id}`);
-    // };
-
     const desktopItems = {
-        a: { top: 13, left: 5, url: image_urls.length > 1 ? image_urls[0] : '/images/bg1.jpg', angle: -7 },
+        a: { top: 25, left: 5, url: image_urls.length > 1 ? image_urls[0] : '/images/bg1.jpg', angle: -7 },
         b: { top: 0, left: 20, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 4 },
-        c: { top: 21, left: 45, url: image_urls.length > 3 ? image_urls[2] : '/images/bg1.jpg', angle: -3 },
-        d: { top: 7, left: 60, url: image_urls.length > 4 ? image_urls[3] : '/images/bg1.jpg', angle: 10 },
-        e: { top: 13, left: 75, url: image_urls.length >= 5 ? image_urls[4] : '/images/bg1.jpg', angle: 4 },
+        c: { top: 20, left: 42, url: image_urls.length > 3 ? image_urls[2] : '/images/bg1.jpg', angle: -3 },
+        d: { top: 2, left: 60, url: image_urls.length > 4 ? image_urls[3] : '/images/bg1.jpg', angle: 10 },
+        e: { top: 28, left: 81, url: image_urls.length >= 5 ? image_urls[4] : '/images/bg1.jpg', angle: 4 },
     };
 
     const mobileItems = {
         a: { top: -10, left: -10, url: image_urls.length > 1 ? image_urls[0] : '/images/bg1.jpg', angle: -7 },
-        b: { top: -5, left: 35, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 4 },
-        c: { top: -5, left: 54, url: image_urls.length >= 3 ? image_urls[2] : '/images/bg1.jpg', angle: 8 },
+        b: { top: 7, left: 30, url: image_urls.length > 2 ? image_urls[1] : '/images/bg1.jpg', angle: 4 },
+        c: { top: -14, left: 76, url: image_urls.length >= 3 ? image_urls[2] : '/images/bg1.jpg', angle: 8 },
     };
 
     const date = new Date(created_at);

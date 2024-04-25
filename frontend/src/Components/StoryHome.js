@@ -18,7 +18,7 @@ const buttonStyle = {
 }
 
 const StoryHome = (props) => {
-  const { date, setDate, visitorId, hasSubmittedToday } = useData();
+  const { date, setDate, visitorId, hasSubmittedToday, setHasSubmittedToday } = useData();
   const today = new Date();
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -27,7 +27,6 @@ const StoryHome = (props) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isInitialPopupOpen, setIsInitialPopupOpen] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [canSubmit, setCanSubmit] = useState(true);
 
   const changeDate = (days) => {
     const newDate = new Date(date);
@@ -56,12 +55,13 @@ const StoryHome = (props) => {
     .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
-      } else {}
+      } 
       return response.json();
     })
     .then(data => {
         console.log(data);
     })
+    setHasSubmittedToday(true);
   };
 
   return (
@@ -80,7 +80,7 @@ const StoryHome = (props) => {
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         onSubmit={handleSubmit}
-        canSubmit={hasSubmittedToday}
+        canSubmit={!hasSubmittedToday}
       />
       <InitialInfoPopup
         isOpen={isInitialPopupOpen}

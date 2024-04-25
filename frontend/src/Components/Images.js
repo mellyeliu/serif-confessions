@@ -47,7 +47,7 @@ const DraggableImage = ({ url, initialLeft, initialTop, angle }) => {
             onMouseLeave={isDragging ? onMouseUp : null}
             class="floating"
         >
-            <img src={url} alt="Draggable item" style={{ width: '150px', height: '150px', display: 'block' }} draggable="false" />
+            <img src={url} alt="Draggable item" style={{ width: '170px', height: '170px', display: 'block' }} draggable="false" />
         </div>
     );
 };
